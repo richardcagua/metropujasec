@@ -19,7 +19,7 @@ app = Flask(__name__)
 app.secret_key = 'nobartys_clave_secreta_super_segura_2026'
 
 # Clave de acceso para tu Panel de Administración
-ADMIN_PASSWORD = 'nobartys2026'
+ADMIN_PASSWORD = 'pando10A@'
 
 # Configuración de carpeta para archivos subidos
 UPLOAD_FOLDER = os.path.join('static', 'uploads')

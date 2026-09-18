@@ -37,11 +37,10 @@ def es_imagen_apropiada(file_storage):
     """Escanea la imagen cargada para detectar patrones de desnudez explícita."""
     try:
         img_bytes = file_storage.read()
-        file_storage.seek(0)  # Rebobinar stream
+        file_storage.seek(0)
 
-        # Abrir la imagen en memoria
         img = Image.open(io.BytesIO(img_bytes)).convert('RGB')
-        img.thumbnail((150, 150))  # Reducir para análisis rápido
+        img.thumbnail((150, 150))
 
         width, height = img.size
         pixels = img.getdata()
@@ -50,7 +49,6 @@ def es_imagen_apropiada(file_storage):
         total_pixels = width * height
 
         for r, g, b in pixels:
-            # Algoritmo de detección cromática de piel corporal explícita
             if (
                     r > 95
                     and g > 40
@@ -64,7 +62,6 @@ def es_imagen_apropiada(file_storage):
 
         porcentaje = (conteo_sospechoso / total_pixels) * 100
 
-        # Si excede el 35% de coincidencia, se rechaza por seguridad
         if porcentaje > 35.0:
             return (
                 False,
@@ -89,10 +86,11 @@ LOGO_SWEET = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' vi
 LOGO_UG = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 250'><rect width='300' height='250' fill='%23FFFFFF'/><g font-family='Arial, sans-serif' font-weight='900'><path d='M 35 40 L 80 40 L 80 140 C 80 175 110 175 110 140 L 110 40 L 155 40 L 155 140 C 155 210 35 210 35 140 Z' fill='%2300A3E0'/><path d='M 135 125 C 135 50 215 50 255 80 L 220 112 C 200 95 178 95 178 125 C 178 155 205 155 220 140 L 195 140 L 195 112 L 260 112 L 260 170 C 230 205 160 205 135 155 Z' fill='%23003366'/><path d='M 210 100 Q 235 80 250 65 Q 235 95 218 112 Z' fill='%2300A3E0'/></g></svg>"
 
 # --------------------------------------------------------------------------
-# BASE DE DATOS EN MEMORIA
+# BASE DE DATOS EN MEMORIA Y CONTROL DE REINICIO TRIMESTRAL
 # --------------------------------------------------------------------------
 
-mes_actual_nombre = 'Septiembre 2026'
+mes_actual_nombre = 'Trimestre Q3 - 2026'
+ultimo_trimestre_reset = '2026-Q3'
 
 ranking_mensual = [
     {
@@ -173,6 +171,21 @@ top3_historico = [
 ]
 
 
+def verificar_reinicio_trimestral():
+    """Verifica si ha comenzado un nuevo trimestre para restablecer montos a $0 conservando las posiciones."""
+    global ranking_mensual, ultimo_trimestre_reset, mes_actual_nombre
+    ahora = datetime.now()
+    trimestre_actual = (ahora.month - 1) // 3 + 1
+    clave_trimestre = f'{ahora.year}-Q{trimestre_actual}'
+
+    # Si inicia un nuevo trimestre el 1° de mes, reinicia montos a $0 conservando las marcas
+    if ultimo_trimestre_reset != clave_trimestre and ahora.day == 1:
+        for item in ranking_mensual:
+            item['monto'] = 0.00
+        ultimo_trimestre_reset = clave_trimestre
+        mes_actual_nombre = f'Trimestre Q{trimestre_actual} - {ahora.year}'
+
+
 def formatear_telefono_wa(num):
     if not num:
         return ''
@@ -231,7 +244,7 @@ def actualizar_rankings(nuevo_registro):
         else ''
     )
 
-    # 1. Actualizar Ránking Mensual (Top 50)
+    # 1. Actualizar Ránking Trimestral (Top 50)
     existente = next(
         (
             item
@@ -295,7 +308,7 @@ def actualizar_rankings(nuevo_registro):
 
 
 # --------------------------------------------------------------------------
-# PLANTILLA HTML PRINCIPAL (CON BRILLO DORADO RESTAURADO Y SEO)
+# PLANTILLA HTML PRINCIPAL (CON TEXTOS Y LÓGICA TRIMESTRAL)
 # --------------------------------------------------------------------------
 HTML_TEMPLATE = """
 <!DOCTYPE html>
@@ -318,7 +331,6 @@ HTML_TEMPLATE = """
     <style>
         body { font-family: 'Outfit', sans-serif; background-color: #030712; }
 
-        /* ANIMACIONES Y BRILLOS NEÓN DORADOS Y ESMERALDA */
         @keyframes orbDrift1 { 0%, 100% { transform: translate(0px, 0px) scale(1); } 50% { transform: translate(60px, 40px) scale(1.15); } }
         @keyframes orbDrift2 { 0%, 100% { transform: translate(0px, 0px) scale(1); } 50% { transform: translate(-50px, -30px) scale(1.25); } }
 
@@ -343,12 +355,11 @@ HTML_TEMPLATE = """
 </head>
 <body class="text-slate-100 min-h-screen relative overflow-x-hidden bg-grid-pattern selection:bg-amber-400 selection:text-slate-950">
 
-    <!-- RESPLANDORES NEÓN DE FONDO (VERDE ESMERALDA Y DORADO ÁMBAR INTENSO) -->
     <div class="fixed top-[-100px] left-1/2 -translate-x-1/2 -z-10 w-[800px] h-[500px] bg-emerald-500/15 blur-[160px] rounded-full pointer-events-none animate-orb-1"></div>
     <div class="fixed bottom-[-100px] right-[-100px] -z-10 w-[700px] h-[500px] bg-amber-500/20 blur-[170px] rounded-full pointer-events-none animate-orb-2"></div>
     <div class="fixed top-[35%] left-[-150px] -z-10 w-[500px] h-[500px] bg-yellow-500/15 blur-[160px] rounded-full pointer-events-none"></div>
 
-    <!-- NAVBAR CRISTALINO CON ACENTOS DORADOS -->
+    <!-- NAVBAR -->
     <header class="border-b border-slate-800/80 bg-slate-950/70 backdrop-blur-xl sticky top-0 z-50 shadow-2xl">
         <div class="max-w-5xl mx-auto px-4 py-3.5 flex justify-between items-center">
             <div class="flex items-center gap-3">
@@ -362,12 +373,11 @@ HTML_TEMPLATE = """
                 </div>
             </div>
 
-            <a href="#participar" class="relative group">
-                <div class="absolute -inset-0.5 bg-gradient-to-r from-amber-400 via-yellow-300 to-emerald-400 rounded-xl blur opacity-80 group-hover:opacity-100 transition duration-300"></div>
-                <span class="relative bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 hover:from-amber-300 hover:to-yellow-200 text-slate-950 font-black text-xs px-5 py-2.5 rounded-xl flex items-center gap-2 shadow-lg transition-all hover:scale-105">
+            <div class="flex items-center gap-3">
+                <a href="#participar" class="bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 hover:from-amber-300 hover:to-yellow-200 text-slate-950 font-black text-xs px-5 py-2.5 rounded-xl flex items-center gap-2 shadow-lg transition-all hover:scale-105">
                     <i class="fa-solid fa-bolt text-slate-950 animate-pulse"></i> Pujar Mi Marca
-                </span>
-            </a>
+                </a>
+            </div>
         </div>
     </header>
 
@@ -411,20 +421,20 @@ HTML_TEMPLATE = """
             </div>
         </section>
 
-        <!-- AVISO DE REINICIO MENSUAL EN BRILLO DORADO/ÁMBAR -->
+        <!-- AVISO DE REINICIO TRIMESTRAL -->
         <div class="bg-amber-950/40 border border-amber-500/50 rounded-2xl p-4 flex items-start gap-4 backdrop-blur-md shadow-[0_0_20px_rgba(245,158,11,0.2)]">
             <div class="bg-amber-500/30 text-amber-300 p-2.5 rounded-xl text-lg shadow-inner">
                 <i class="fa-solid fa-rotate-left"></i>
             </div>
             <div class="text-xs leading-relaxed space-y-0.5">
-                <strong class="text-amber-300 text-sm font-bold block">Tablas Restablecidas Cada 1° de Mes</strong>
+                <strong class="text-amber-300 text-sm font-bold block">Tablas Restablecidas Cada 3 Meses (Trimestral)</strong>
                 <p class="text-slate-300">
-                    Para garantizar igualdad de oportunidades a nuevos emprendimientos de Guayaquil, Samborondón y Daule, las pujas mensuales inician en $0.00 al comenzar cada mes.
+                    El 1° día de cada trimestre, los contadores de pujas vuelven a $0.00 USD. **Las marcas conservan su posición en la lista**, listas para sumar sus nuevas pujas en el nuevo ciclo.
                 </p>
             </div>
         </div>
 
-        <!-- SECCIÓN 1: RÁNKING INMORTAL CON RESPLANDOR ORO 24K -->
+        <!-- SECCIÓN 1: RÁNKING INMORTAL -->
         <section class="space-y-6">
             <div class="flex items-center justify-between">
                 <div>
@@ -516,14 +526,14 @@ HTML_TEMPLATE = """
             </div>
         </section>
 
-        <!-- TOP 50 MENSUAL VERTICAL -->
+        <!-- TOP 50 TRIMESTRAL VERTICAL -->
         <section class="space-y-6">
             <div class="flex items-center justify-between">
                 <div>
                     <span class="bg-emerald-500/10 text-emerald-400 font-bold text-[11px] uppercase tracking-widest px-3 py-1 rounded-lg border border-emerald-500/30 inline-block mb-1">
-                        <i class="fa-solid fa-calendar-days mr-1"></i> Ciclo {{ mes_actual }}
+                        <i class="fa-solid fa-calendar-days mr-1"></i> {{ mes_actual }}
                     </span>
-                    <h3 class="text-2xl md:text-3xl font-black text-white">Top 50 Mensual (Provincia del Guayas)</h3>
+                    <h3 class="text-2xl md:text-3xl font-black text-white">Top 50 Trimestral (Provincia del Guayas)</h3>
                 </div>
             </div>
 
@@ -576,19 +586,19 @@ HTML_TEMPLATE = """
                 </div>
                 {% else %}
                 <div class="text-center py-10 bg-slate-900/30 border border-slate-800 rounded-2xl text-slate-400 text-sm">
-                    No hay pujas registradas este mes aún. ¡Sé el primero en posicionarte en Guayas!
+                    No hay pujas registradas este trimestre aún. ¡Sé el primero en posicionarte en Guayas!
                 </div>
                 {% endfor %}
             </div>
         </section>
 
-        <!-- FORMULARIO DE PUJA CON HIGHLIGHT DORADO -->
+        <!-- FORMULARIO DE PUJA -->
         <section id="participar" class="bg-slate-900/60 border border-slate-800 rounded-3xl p-6 md:p-10 backdrop-blur-2xl shadow-2xl relative">
             <div class="mb-8 space-y-1">
                 <h3 class="text-2xl font-black text-white flex items-center gap-2">
                     <i class="fa-solid fa-paper-plane text-amber-400"></i> Formulario de Posicionamiento (Guayas)
                 </h3>
-                <p class="text-xs text-slate-400">Tu puja te posicionará en el Top 50 Mensual o Top 3 Inmortal.</p>
+                <p class="text-xs text-slate-400">Tu puja te posicionará en el Top 50 Trimestral o Top 3 Inmortal.</p>
             </div>
 
             <form action="/pujar" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -622,7 +632,6 @@ HTML_TEMPLATE = """
                            class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-emerald-500">
                 </div>
 
-                <!-- SUBIDA DE ARCHIVOS CON DETECCIÓN DE CONTENIDO SEXUAL -->
                 <div>
                     <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Logotipo de la Empresa <span class="text-slate-500 font-normal text-[11px]">(Opcional)</span></label>
                     <div class="relative border-2 border-dashed border-slate-800 hover:border-emerald-500 rounded-2xl p-4 text-center bg-slate-950/60 transition-all cursor-pointer group">
@@ -695,6 +704,11 @@ ADMIN_PANEL_TEMPLATE = """
             </div>
             <div class="flex items-center gap-2">
                 <a href="/" class="text-xs bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-lg"><i class="fa-solid fa-globe mr-1"></i> Ver Sitio Web</a>
+                <form action="/admin/reiniciar-trimestre" method="POST">
+                    <button type="submit" onclick="return confirm('¿Deseas reiniciar los contadores a $0.00 conservando las marcas en sus posiciones actuales?')" class="text-xs bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-3 py-2 rounded-lg">
+                        <i class="fa-solid fa-rotate-left mr-1"></i> Reiniciar Trimestre ($0.00)
+                    </button>
+                </form>
                 <a href="/admin/logout" class="text-xs bg-rose-950 text-rose-300 hover:bg-rose-900 px-3 py-2 rounded-lg"><i class="fa-solid fa-power-off"></i></a>
             </div>
         </div>
@@ -706,7 +720,7 @@ ADMIN_PANEL_TEMPLATE = """
         {% endif %}
 
         <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4">
-            <h2 class="text-lg font-bold text-white"><i class="fa-solid fa-list-check text-amber-400"></i> Editar Ránking Mensual Actual</h2>
+            <h2 class="text-lg font-bold text-white"><i class="fa-solid fa-list-check text-amber-400"></i> Editar Ránking Trimestral Actual</h2>
 
             <div class="space-y-3">
                 {% for item in mensual %}
@@ -746,6 +760,7 @@ ADMIN_PANEL_TEMPLATE = """
 
 @app.route('/')
 def index():
+    verificar_reinicio_trimestral()
     msg = request.args.get('msg', '')
     err = request.args.get('err', '')
     return render_template_string(
@@ -761,6 +776,7 @@ def index():
 @app.route('/pujar', methods=['POST'])
 def pujar():
     try:
+        verificar_reinicio_trimestral()
         nombre = request.form.get('nombre', '').strip()
         direccion = request.form.get('direccion', '').strip()
         web = request.form.get('web', '').strip()
@@ -815,7 +831,7 @@ def pujar():
 
 
 # --------------------------------------------------------------------------
-# PANEL DE ADMINISTRACIÓN SEGURO Y PROTEGIDO POR CLAVE
+# PANEL DE ADMINISTRACIÓN SEGURO Y ACCIONES EN TIEMPO REAL
 # --------------------------------------------------------------------------
 
 
@@ -827,12 +843,12 @@ def admin_login():
             session['admin_authenticated'] = True
             return redirect(url_for('admin_panel'))
         return render_template_string(
-            "<body bg-slate-950 style='background:#030712; color:white;"
-            " font-family:sans-serif; display:flex; justify-content:center;"
-            " align-items:center; height:100vh;'><form method='POST'"
-            " style='background:#111827; padding:30px; border-radius:16px;'><h3"
-            " style='color:#f59e0b;'>Clave Incorrecta</h3><input type='password'"
-            " name='password' placeholder='Ingresa la clave' style='padding:8px;"
+            "<body style='background:#030712; color:white; font-family:sans-serif;"
+            " display:flex; justify-content:center; align-items:center;"
+            " height:100vh;'><form method='POST' style='background:#111827;"
+            " padding:30px; border-radius:16px;'><h3 style='color:#f59e0b;'>Clave"
+            " Incorrecta</h3><input type='password' name='password'"
+            " placeholder='Ingresa la clave' style='padding:8px;"
             " border-radius:8px;'><button type='submit'"
             " style='background:#f59e0b; padding:8px 16px; border-radius:8px;"
             " font-weight:bold;'>Entrar</button></form></body>"
@@ -860,6 +876,24 @@ def admin_panel():
     msg = request.args.get('msg', '')
     return render_template_string(
         ADMIN_PANEL_TEMPLATE, mensual=ranking_mensual, msg=msg
+    )
+
+
+@app.route('/admin/reiniciar-trimestre', methods=['POST'])
+def reiniciar_trimestre_manual():
+    if not session.get('admin_authenticated'):
+        return redirect(url_for('admin_login'))
+    global ranking_mensual
+    for item in ranking_mensual:
+        item['monto'] = 0.00
+    return redirect(
+        url_for(
+            'admin_panel',
+            msg=(
+                '¡El trimestre fue reiniciado a $0.00 USD manteniendo las'
+                ' marcas en sus posiciones!'
+            ),
+        )
     )
 
 

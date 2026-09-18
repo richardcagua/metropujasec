@@ -6,69 +6,64 @@ import requests
 
 app = Flask(__name__)
 
-# Configuración de dLocal Go (Creación gratis en dlocalgo.com)
+# Configuración de dLocal Go
 DLOCALGO_API_KEY = os.environ.get("DLOCALGO_API_KEY", "TU_API_KEY_DLOCALGO_AQUI")
 DLOCALGO_SECRET_KEY = os.environ.get(
     "DLOCALGO_SECRET_KEY", "TU_SECRET_KEY_DLOCALGO_AQUI"
 )
-# Usa 'https://api-sbx.dlocalgo.com' para pruebas o 'https://api.dlocalgo.com' para producción
 DLOCALGO_BASE_URL = os.environ.get(
     "DLOCALGO_BASE_URL", "https://api-sbx.dlocalgo.com"
 )
 
-# Base de datos en memoria para el prototipo en vivo (Proyectos de Guayas)
+# Base de datos en memoria con Tabla de Posiciones Top 5 por Proyecto
 proyectos = {
     1: {
         "id": 1,
         "nombre": "Suite Luxury Mocolí",
         "ubicacion": "Isla Mocolí, Samborondón",
         "descuento_voucher": 12000.00,
-        "puja_actual": 45.00,
-        "lider_actual": "Carlos M.",
-        "tiempo_restante": 180,  # segundos
         "imagen": (
             "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80"
         ),
-        "total_pujas": 45,
+        "ranking": [
+            {"puesto": 1, "nombre": "Carlos M.", "monto": 150.00},
+            {"puesto": 2, "nombre": "Andrea V.", "monto": 110.00},
+            {"puesto": 3, "nombre": "Roberto G.", "monto": 75.00},
+            {"puesto": 4, "nombre": "Dome K.", "monto": 40.00},
+            {"puesto": 5, "nombre": "Luis P.", "monto": 25.00},
+        ],
     },
     2: {
         "id": 2,
         "nombre": "Depa Vista al Río - Torre Bellini",
         "ubicacion": "Puerto Santa Ana, Guayaquil",
         "descuento_voucher": 15000.00,
-        "puja_actual": 82.00,
-        "lider_actual": "Andrea V.",
-        "tiempo_restante": 240,
         "imagen": (
             "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80"
         ),
-        "total_pujas": 82,
+        "ranking": [
+            {"puesto": 1, "nombre": "Valeria S.", "monto": 220.00},
+            {"puesto": 2, "nombre": "Fernando C.", "monto": 180.00},
+            {"puesto": 3, "nombre": "Xavier T.", "monto": 130.00},
+            {"puesto": 4, "nombre": "Ma. José R.", "monto": 90.00},
+            {"puesto": 5, "nombre": "Esteban B.", "monto": 50.00},
+        ],
     },
     3: {
         "id": 3,
         "nombre": "Casa Modelo Premier",
         "ubicacion": "Vía a la Costa, Km 14",
         "descuento_voucher": 10000.00,
-        "puja_actual": 29.00,
-        "lider_actual": "Roberto G.",
-        "tiempo_restante": 310,
         "imagen": (
             "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80"
         ),
-        "total_pujas": 29,
-    },
-    4: {
-        "id": 4,
-        "nombre": "Penthouse Ejecutivo Ceibos",
-        "ubicacion": "Los Ceibos, Guayaquil",
-        "descuento_voucher": 20000.00,
-        "puja_actual": 110.00,
-        "lider_actual": "Dome K.",
-        "tiempo_restante": 90,
-        "imagen": (
-            "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80"
-        ),
-        "total_pujas": 110,
+        "ranking": [
+            {"puesto": 1, "nombre": "Gabriel M.", "monto": 95.00},
+            {"puesto": 2, "nombre": "Patricia L.", "monto": 70.00},
+            {"puesto": 3, "nombre": "Daniel A.", "monto": 50.00},
+            {"puesto": 4, "nombre": "Javier H.", "monto": 30.00},
+            {"puesto": 5, "nombre": "Sofia V.", "monto": 15.00},
+        ],
     },
 }
 
@@ -78,7 +73,7 @@ HTML_TEMPLATE = """
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MetroPuja.ec | Subastas de Reserva Inmobiliaria en Guayas</title>
+    <title>MetroPuja.ec | Subastas Inmobiliarias en Guayas</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -100,16 +95,13 @@ HTML_TEMPLATE = """
             </div>
             <div class="flex items-center gap-4">
                 <span class="bg-emerald-950 text-emerald-400 border border-emerald-800 text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span> PUJAS EN VIVO
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span> TABLA EN VIVO
                 </span>
-                <div class="hidden md:flex items-center gap-2 text-xs text-slate-400 bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700">
-                    <i class="fa-solid fa-bolt text-emerald-400"></i> Pagos con dLocal Go (Ecuador)
-                </div>
             </div>
         </div>
     </header>
 
-    <!-- Banner Mensaje / Notificación -->
+    <!-- Banner Mensaje -->
     {% if msg %}
     <div class="max-w-7xl mx-auto px-4 pt-4">
         <div class="bg-emerald-950/90 border border-emerald-500/50 text-emerald-300 px-4 py-3 rounded-xl flex items-center gap-3 text-sm">
@@ -124,71 +116,84 @@ HTML_TEMPLATE = """
         <div class="bg-gradient-to-r from-emerald-900/40 via-slate-800 to-slate-900 border border-emerald-500/30 rounded-2xl p-6 md:p-8 relative overflow-hidden">
             <div class="max-w-2xl">
                 <span class="text-emerald-400 font-bold text-xs uppercase tracking-widest bg-emerald-950/80 px-3 py-1 rounded-md border border-emerald-800">
-                    Oportunidad Inmobiliaria Exclusiva
+                    Subasta de Vouchers Inmobiliarios
                 </span>
                 <h2 class="text-3xl md:text-4xl font-extrabold text-white mt-3 leading-tight">
-                    Gana un Voucher de <span class="text-emerald-400">$10,000 a $20,000 USD</span> para la reserva de tu propiedad.
+                    Puja el monto que desees y posicionate en el <span class="text-emerald-400">Puesto #1</span>.
                 </h2>
                 <p class="text-slate-300 text-sm mt-3 leading-relaxed">
-                    Puja $1.00 USD para tomar el primer lugar. Cada puja incrementa el acumulado y reinicia el cronómetro de cierre. El último pujador gana el bono de descuento oficial para la entrada.
+                    Ingresa tu valor a pujar para desplazar a los competidores. Quien cierre en la posición #1 al finalizar el tiempo obtiene el Voucher de Descuento Oficial para la cuota inicial de la propiedad.
                 </p>
             </div>
         </div>
     </section>
 
-    <!-- Project Cards Grid -->
+    <!-- Cards Grid -->
     <main class="max-w-7xl mx-auto px-4 pb-16">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {% for id, p in proyectos.items() %}
             <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl overflow-hidden hover:border-emerald-500/50 transition-all flex flex-col justify-between">
                 <div>
                     <!-- Image Container -->
-                    <div class="relative h-52 overflow-hidden">
+                    <div class="relative h-48 overflow-hidden">
                         <img src="{{ p.imagen }}" alt="{{ p.nombre }}" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
                         <div class="absolute top-3 left-3 bg-slate-950/80 backdrop-blur text-emerald-400 text-xs font-bold px-3 py-1 rounded-full border border-slate-700">
                             <i class="fa-solid fa-location-dot mr-1"></i> {{ p.ubicacion }}
                         </div>
-                        <div class="absolute bottom-3 right-3 bg-amber-500 text-slate-950 font-black text-sm px-3 py-1 rounded-lg shadow-lg">
-                            AHORRO: ${{ "{:,.0f}".format(p.descuento_voucher) }} USD
+                        <div class="absolute bottom-3 right-3 bg-amber-500 text-slate-950 font-black text-xs px-2.5 py-1 rounded-lg shadow-lg">
+                            BONO: ${{ "{:,.0f}".format(p.descuento_voucher) }} USD
                         </div>
                     </div>
 
-                    <!-- Content Details -->
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-white mb-1">{{ p.nombre }}</h3>
-                        <p class="text-xs text-slate-400 mb-4">Voucher oficial aplicable al pago inicial de la propiedad.</p>
+                    <!-- Details & Leaderboard -->
+                    <div class="p-5">
+                        <h3 class="text-lg font-bold text-white mb-1">{{ p.nombre }}</h3>
+                        <p class="text-xs text-slate-400 mb-4">Top 5 Candidatos por el Voucher:</p>
 
-                        <div class="grid grid-cols-2 gap-4 bg-slate-900/80 p-4 rounded-xl border border-slate-700/50 mb-4">
-                            <div>
-                                <span class="text-slate-400 text-xs block">Puja Actual</span>
-                                <span class="text-2xl font-black text-emerald-400">${{ "%.2f"|format(p.puja_actual) }}</span>
+                        <!-- TOP 5 RANKING TABLE -->
+                        <div class="bg-slate-900/90 rounded-xl border border-slate-700/60 overflow-hidden mb-4">
+                            {% for r in p.ranking %}
+                            <div class="flex items-center justify-between px-3.5 py-2 border-b border-slate-800/80 text-xs {% if loop.first %}bg-emerald-950/40{% endif %}">
+                                <div class="flex items-center gap-2">
+                                    {% if loop.index == 1 %}
+                                        <span class="w-5 text-amber-400 font-bold"><i class="fa-solid fa-trophy"></i></span>
+                                    {% elif loop.index == 2 %}
+                                        <span class="w-5 text-slate-300 font-bold">2.</span>
+                                    {% elif loop.index == 3 %}
+                                        <span class="w-5 text-amber-600 font-bold">3.</span>
+                                    {% else %}
+                                        <span class="w-5 text-slate-500 font-bold">{{ loop.index }}.</span>
+                                    {% endif %}
+                                    <span class="font-semibold {% if loop.first %}text-emerald-300 font-bold{% else %}text-slate-200{% endif %}">
+                                        {{ r.nombre }}
+                                    </span>
+                                </div>
+                                <span class="font-mono font-bold text-emerald-400">${{ "%.2f"|format(r.monto) }} USD</span>
                             </div>
-                            <div>
-                                <span class="text-slate-400 text-xs block">Líder en Vivo</span>
-                                <span class="text-sm font-bold text-slate-200 flex items-center gap-1 mt-1">
-                                    <i class="fa-solid fa-crown text-amber-400 text-xs"></i> {{ p.lider_actual }}
-                                </span>
-                            </div>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
 
-                <!-- Action & Bidding Form -->
-                <div class="p-6 pt-0 border-t border-slate-700/50 mt-2">
-                    <form action="/pujar" method="POST" class="mt-4 flex flex-col gap-3">
+                <!-- Bidding Form -->
+                <div class="p-5 pt-0 border-t border-slate-700/50 mt-2">
+                    <form action="/pujar" method="POST" class="mt-3 flex flex-col gap-2.5">
                         <input type="hidden" name="id" value="{{ p.id }}">
+                        
+                        <input type="text" name="usuario" placeholder="Tu Nombre / Seudónimo" required 
+                               class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500 w-full">
+                        
                         <div class="flex gap-2">
-                            <input type="text" name="usuario" placeholder="Tu nombre / Seudónimo" required 
-                                   class="bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-500 flex-1">
+                            <div class="relative flex-1">
+                                <span class="absolute left-3 top-2 text-xs text-slate-400">$</span>
+                                <input type="number" name="monto" min="5" step="1" placeholder="Monto a pujar" required 
+                                       class="bg-slate-900 border border-slate-700 rounded-lg pl-6 pr-2 py-2 text-xs text-white focus:outline-none focus:border-emerald-500 w-full">
+                            </div>
                             <button type="submit" 
-                                    class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold px-5 py-2 rounded-lg text-sm transition-all flex items-center gap-2 shadow-lg shadow-emerald-500/20">
-                                <i class="fa-solid fa-gavel"></i> Pujar +$1.00
+                                    class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold px-4 py-2 rounded-lg text-xs transition-all flex items-center gap-1.5 shadow-lg shadow-emerald-500/20">
+                                <i class="fa-solid fa-bolt"></i> Pujar Ahora
                             </button>
-                        </div>
-                        <div class="flex items-center justify-between text-xs text-slate-400 px-1">
-                            <span><i class="fa-regular fa-clock mr-1"></i> Cierre dinámico</span>
-                            <span>Total pujas: <strong class="text-white">{{ p.total_pujas }}</strong></span>
                         </div>
                     </form>
                 </div>
@@ -200,9 +205,7 @@ HTML_TEMPLATE = """
     <!-- Footer -->
     <footer class="border-t border-slate-800 bg-slate-950 py-8 text-center text-xs text-slate-500">
         <p>© 2026 MetroPuja.ec — Subastas Inmobiliarias para Guayaquil y Samborondón.</p>
-        <p class="mt-2 text-slate-600 flex items-center justify-center gap-2">
-            <i class="fa-solid fa-shield-halved text-emerald-400"></i> Procesamiento local seguro dLocal Go (Ecuador)
-        </p>
+        <p class="mt-2 text-slate-600"><i class="fa-solid fa-lock text-emerald-400"></i> Pagos procesados vía dLocal Go Ecuador</p>
     </footer>
 
 </body>
@@ -221,52 +224,57 @@ def pujar():
   try:
     pid = int(request.form.get("id"))
     usuario = request.form.get("usuario", "Anónimo").strip()
+    monto = float(request.form.get("monto", 0))
 
     if not usuario:
       usuario = "Comprador Guayaquil"
 
-    if pid in proyectos:
+    if pid in proyectos and monto > 0:
       proyecto = proyectos[pid]
 
-      # MODO PRUEBA EN PYCHARM: Si no has colocado tus llaves reales de dLocal Go
+      # MODO PRUEBA LOCAL EN PYCHARM
       if (
           DLOCALGO_API_KEY == "TU_API_KEY_DLOCALGO_AQUI"
           or "AQUI" in DLOCALGO_API_KEY
       ):
-        proyectos[pid]["puja_actual"] += 1.00
-        proyectos[pid]["total_pujas"] += 1
-        proyectos[pid]["lider_actual"] = usuario
-        proyectos[pid]["tiempo_restante"] = 120
+        # Insertar puja y reordenar ranking Top 5
+        proyecto["ranking"].append({"nombre": usuario, "monto": monto})
+        # Ordenar de mayor a menor monto
+        proyecto["ranking"] = sorted(
+            proyecto["ranking"], key=lambda x: x["monto"], reverse=True
+        )[:5]
+
+        # Recalcular número de puesto
+        for idx, item in enumerate(proyecto["ranking"]):
+          item["puesto"] = idx + 1
+
         return redirect(
             url_for(
                 "index",
                 msg=(
-                    f"¡Puja de $1.00 USD registrada (Modo Prueba) para"
+                    f"¡Puja de ${monto:.2f} USD registrada exitosamente para"
                     f" {usuario}!"
                 ),
             )
         )
 
-      # MODO PRODUCCIÓN: Petición a dLocal Go API (Checkout Ecuador)
+      # MODO PRODUCCIÓN DLOCAL GO (Cobro dinámico por el monto ingresado)
       headers = {
           "Authorization": f"Bearer {DLOCALGO_API_KEY}:{DLOCALGO_SECRET_KEY}",
           "Content-Type": "application/json",
       }
 
-      success_url = (
-          f"{request.host_url}exito?id={pid}&usuario={quote(usuario)}"
-      )
+      success_url = f"{request.host_url}exito?id={pid}&usuario={quote(usuario)}&monto={monto}"
 
       payload = {
-          "amount": 1.00,
+          "amount": monto,
           "currency": "USD",
           "country": "EC",
           "description": (
-              f"Puja +$1.00 - {proyecto['nombre']} ({proyecto['ubicacion']})"
+              f"Puja Posicionamiento ${monto:.2f} - {proyecto['nombre']}"
           ),
           "success_url": success_url,
           "back_url": request.host_url,
-          "notification_url": f"{request.host_url}dlocalgo/webhook",
       }
 
       response = requests.post(
@@ -279,22 +287,16 @@ def pujar():
         if redirect_url:
           return redirect(redirect_url)
 
-      # Fallback si ocurre algún problema con las credenciales
-      proyectos[pid]["puja_actual"] += 1.00
-      proyectos[pid]["total_pujas"] += 1
-      proyectos[pid]["lider_actual"] = usuario
-      return redirect(
-          url_for(
-              "index",
-              msg=(
-                  f"¡Puja procesada correctamente para {usuario}! (Actualización"
-                  " local)"
-              ),
-          )
-      )
+      # Fallback local
+      proyecto["ranking"].append({"nombre": usuario, "monto": monto})
+      proyecto["ranking"] = sorted(
+          proyecto["ranking"], key=lambda x: x["monto"], reverse=True
+      )[:5]
+      for idx, item in enumerate(proyecto["ranking"]):
+        item["puesto"] = idx + 1
 
   except Exception as e:
-    print(f"Error procesando dLocal Go: {e}")
+    print(f"Error en puja: {e}")
 
   return redirect(url_for("index"))
 
@@ -304,18 +306,23 @@ def exito():
   try:
     pid = int(request.args.get("id", 0))
     usuario = request.args.get("usuario", "Comprador Guayaquil")
+    monto = float(request.args.get("monto", 0))
 
-    if pid in proyectos:
-      proyectos[pid]["puja_actual"] += 1.00
-      proyectos[pid]["total_pujas"] += 1
-      proyectos[pid]["lider_actual"] = usuario
-      proyectos[pid]["tiempo_restante"] = 120
+    if pid in proyectos and monto > 0:
+      proyecto = proyectos[pid]
+      proyecto["ranking"].append({"nombre": usuario, "monto": monto})
+      proyecto["ranking"] = sorted(
+          proyecto["ranking"], key=lambda x: x["monto"], reverse=True
+      )[:5]
+      for idx, item in enumerate(proyecto["ranking"]):
+        item["puesto"] = idx + 1
+
       return redirect(
           url_for(
               "index",
               msg=(
-                  "¡Pago procesado con éxito por dLocal Go! Ahora"
-                  f" {usuario} es el nuevo líder."
+                  f"¡Pago confirmado de ${monto:.2f} USD! {usuario} se ha"
+                  " posicionado en el ranking."
               ),
           )
       )
@@ -323,20 +330,6 @@ def exito():
     pass
 
   return redirect(url_for("index"))
-
-
-# Webhook para notificaciones automáticas de dLocal Go
-@app.route("/dlocalgo/webhook", methods=["POST"])
-def webhook():
-  data = request.get_json(silent=True) or {}
-  # Aquí dLocal Go confirma cuando la transferencia o tarjeta fue aprobada
-  return jsonify({"status": "RECEIVED"}), 200
-
-
-# Endpoint JSON
-@app.route("/api/proyectos")
-def api_proyectos():
-  return jsonify(proyectos)
 
 
 if __name__ == "__main__":

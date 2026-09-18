@@ -14,7 +14,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # Límite 16MB
 
 # --------------------------------------------------------------------------
-# LOGOTIPOS EMBEBIDOS (DATA URIs VECTORIALES EXACTOS)
+# LOGOTIPOS EMBEBIDOS (DATA URIs VECTORIALES NÍTIOS)
 # --------------------------------------------------------------------------
 
 LOGO_TEATRO = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'><rect width='300' height='300' fill='%237A1A22'/><text x='150' y='45' fill='%23E2B3B7' font-family='Georgia, serif' font-size='20' font-weight='bold' text-anchor='middle' letter-spacing='5'>TEATRO</text><g stroke='%23E2B3B7' stroke-width='2' fill='none'><rect x='50' y='60' width='200' height='120' rx='2'/><line x1='50' y1='80' x2='250' y2='80'/><line x1='50' y1='100' x2='250' y2='100'/><line x1='50' y1='140' x2='250' y2='140'/><line x1='75' y1='60' x2='75' y2='180'/><line x1='105' y1='60' x2='105' y2='180'/><line x1='135' y1='60' x2='135' y2='180'/><line x1='165' y1='60' x2='165' y2='180'/><line x1='195' y1='60' x2='195' y2='180'/><line x1='225' y1='60' x2='225' y2='180'/><path d='M 135 140 A 15 15 0 0 1 165 140 Z' fill='%23E2B3B7'/></g><text x='150' y='225' fill='%23E2B3B7' font-family='Georgia, serif' font-size='30' font-weight='bold' text-anchor='middle' letter-spacing='2'>SANCHEZ</text><text x='150' y='265' fill='%23E2B3B7' font-family='Georgia, serif' font-size='30' font-weight='bold' text-anchor='middle' letter-spacing='2'>AGUILAR</text></svg>"
@@ -221,159 +221,244 @@ def actualizar_rankings(nuevo_registro):
 
 
 # --------------------------------------------------------------------------
-# PLANTILLA HTML INTEGRADA CON FOOTER CON CREDITO A INSTAGRAM
+# PLANTILLA HTML CON DISEÑO "WOW", GLASSMORPHISM & SEO
 # --------------------------------------------------------------------------
 HTML_TEMPLATE = """
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MetroPuja.ec | Ránking Exclusivo Guayas</title>
+    <title>MetroPuja.ec | Plataforma de Posicionamiento Comercial en Guayas</title>
+    
+    <!-- ================================================================= -->
+    <!-- METADATOS SEO INVISIBLES PARA INDEXACIÓN AUTOMÁTICA EN GOOGLE     -->
+    <!-- ================================================================= -->
+    <meta name="description" content="MetroPuja.ec es la subasta interactiva de visibilidad web y posicionamiento comercial líder en Guayaquil, Samborondón, Daule y la provincia del Guayas. Destaca tu marca en el Top 50.">
+    <meta name="keywords" content="MetroPuja, MetroPuja.ec, posicionamiento comercial Guayaquil, publicidad digital Guayas, marcas Samborondón, empresas Daule, subasta web Ecuador, directorio de empresas Guayaquil, publicidad marcas Guayas, SEO Ecuador">
+    <meta name="author" content="MetroPuja.ec - @nobartys">
+    <meta name="robots" content="index, follow">
+
+    <!-- OPEN GRAPH FOR SOCIAL MEDIA PREVIEWS (WHATSAPP, FACEBOOK) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="MetroPuja.ec | Lidera la Visibilidad de Marcas en Guayas">
+    <meta property="og:description" content="Posiciona tu negocio en el Puesto #1 del ránking mensual de la provincia del Guayas.">
+    <meta property="og:url" content="https://metropuja.ec/">
+    <meta property="og:site_name" content="MetroPuja.ec">
+
+    <!-- ESTRUCTURA SCHEMA JSON-LD (GOOGLE SEARCH KNOWLEDGE GRAPH) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "MetroPuja.ec",
+      "url": "https://metropuja.ec/",
+      "description": "Plataforma de posicionamiento y subasta de tráfico comercial para empresas en la Provincia del Guayas.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "MetroPuja.ec",
+        "url": "https://metropuja.ec/"
+      },
+      "areaServed": {
+        "@type": "AdministrativeArea",
+        "name": "Guayas, Ecuador"
+      }
+    }
+    </script>
+
+    <!-- ESTILOS Y FUENTES PREMIUM -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { 
+            font-family: 'Outfit', sans-serif; 
+            background-color: #030712;
+        }
+
+        /* ANIMACIONES AMBIENTALES DE ALTA FLUIDEZ */
+        @keyframes orbDrift1 {
+            0%, 100% { transform: translate(0px, 0px) scale(1); }
+            50% { transform: translate(60px, 40px) scale(1.15); }
+        }
+        @keyframes orbDrift2 {
+            0%, 100% { transform: translate(0px, 0px) scale(1); }
+            50% { transform: translate(-50px, -30px) scale(1.2); }
+        }
+        @keyframes borderGlow {
+            0%, 100% { border-color: rgba(16, 185, 129, 0.25); box-shadow: 0 0 15px rgba(16, 185, 129, 0.1); }
+            50% { border-color: rgba(16, 185, 129, 0.6); box-shadow: 0 0 30px rgba(16, 185, 129, 0.25); }
+        }
+
+        .animate-orb-1 { animation: orbDrift1 14s ease-in-out infinite; }
+        .animate-orb-2 { animation: orbDrift2 18s ease-in-out infinite; }
+        .glow-card { animation: borderGlow 5s infinite; }
+
+        /* MESH PATTERN DE FONDO */
+        .bg-grid-pattern {
+            background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        /* DRAG & DROP ACTIVE STYLES */
+        .dropzone-active {
+            border-color: #10b981 !important;
+            background-color: rgba(16, 185, 129, 0.1) !important;
+        }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900 via-slate-950 to-black relative overflow-x-hidden">
+<body class="text-slate-100 min-h-screen relative overflow-x-hidden bg-grid-pattern selection:bg-emerald-500 selection:text-slate-950">
 
-    <!-- RESPLANDOR AMBIENTAL DE FONDO -->
-    <div class="fixed top-0 left-1/2 -translate-x-1/2 -z-10 w-[900px] h-[400px] bg-emerald-500/10 blur-[140px] rounded-full pointer-events-none"></div>
+    <!-- LUCES NEÓN DE FONDO (LUZ DINÁMICA FLUIDA) -->
+    <div class="fixed top-[-100px] left-1/2 -translate-x-1/2 -z-10 w-[800px] h-[500px] bg-emerald-500/15 blur-[160px] rounded-full pointer-events-none animate-orb-1"></div>
+    <div class="fixed bottom-[-100px] right-[-100px] -z-10 w-[600px] h-[400px] bg-cyan-500/10 blur-[150px] rounded-full pointer-events-none animate-orb-2"></div>
+    <div class="fixed top-[40%] left-[-150px] -z-10 w-[500px] h-[500px] bg-amber-500/10 blur-[170px] rounded-full pointer-events-none"></div>
 
-    <!-- Header Navigation -->
-    <header class="border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-md sticky top-0 z-50">
-        <div class="max-w-5xl mx-auto px-4 py-4 flex justify-between items-center">
+    <!-- NAVBAR CRISTALINO -->
+    <header class="border-b border-slate-800/80 bg-slate-950/70 backdrop-blur-xl sticky top-0 z-50 transition-all shadow-2xl">
+        <div class="max-w-5xl mx-auto px-4 py-3.5 flex justify-between items-center">
             <div class="flex items-center gap-3">
-                <div class="bg-gradient-to-tr from-emerald-600 to-emerald-400 text-slate-950 font-black text-xl px-3 py-1 rounded-lg shadow-lg shadow-emerald-500/20">MP</div>
+                <div class="relative group">
+                    <div class="absolute -inset-0.5 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-xl blur opacity-75 group-hover:opacity-100 transition duration-300"></div>
+                    <div class="relative bg-slate-950 text-emerald-400 font-black text-xl px-3.5 py-1 rounded-xl">MP</div>
+                </div>
                 <div>
-                    <h1 class="font-extrabold text-xl tracking-tight text-white">MetroPuja<span class="text-emerald-400">.ec</span></h1>
-                    <p class="text-xs text-slate-400">Exclusivo Guayas • Guayaquil • Samborondón • Daule</p>
+                    <h1 class="font-black text-xl tracking-tight text-white flex items-center gap-1">
+                        MetroPuja<span class="text-emerald-400">.ec</span>
+                    </h1>
+                    <p class="text-[11px] text-slate-400 font-medium tracking-wide">Exclusivo Guayas • Guayaquil • Samborondón • Daule</p>
                 </div>
             </div>
-            <div class="flex items-center gap-2">
-                <a href="#participar" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-xs px-4 py-2 rounded-lg transition-all flex items-center gap-1.5 shadow-lg shadow-emerald-500/20">
-                    <i class="fa-solid fa-bolt"></i> Pujar Mi Marca
-                </a>
-            </div>
+
+            <a href="#participar" class="relative group">
+                <div class="absolute -inset-0.5 bg-gradient-to-r from-emerald-500 to-teal-400 rounded-xl blur opacity-70 group-hover:opacity-100 transition duration-300"></div>
+                <span class="relative bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-extrabold text-xs px-5 py-2.5 rounded-xl transition-all flex items-center gap-2 shadow-lg">
+                    <i class="fa-solid fa-bolt text-slate-950 animate-pulse"></i> Pujar Mi Marca
+                </span>
+            </a>
         </div>
     </header>
 
-    <!-- Banner Notificación -->
+    <!-- NOTIFICACIÓN DE PUJA EXITOSA -->
     {% if msg %}
-    <div class="max-w-5xl mx-auto px-4 pt-4">
-        <div class="bg-emerald-950/90 border border-emerald-500/50 text-emerald-300 px-4 py-3 rounded-xl flex items-center gap-3 text-sm">
-            <i class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
-            <span>{{ msg }}</span>
+    <div class="max-w-5xl mx-auto px-4 pt-6">
+        <div class="bg-emerald-950/80 border border-emerald-500/60 text-emerald-200 px-5 py-3.5 rounded-2xl flex items-center gap-3 text-sm shadow-2xl backdrop-blur-md animate-fade-in">
+            <i class="fa-solid fa-circle-check text-emerald-400 text-xl animate-bounce"></i>
+            <span class="font-semibold">{{ msg }}</span>
         </div>
     </div>
     {% endif %}
 
-    <main class="max-w-5xl mx-auto px-4 py-8 space-y-8">
+    <main class="max-w-5xl mx-auto px-4 py-8 space-y-10">
 
-        <!-- HERO BANNER -->
+        <!-- HERO BANNER INTERACTIVO CON GLASSMORPHISM -->
         <section>
-            <div class="bg-gradient-to-r from-emerald-900/30 via-slate-900/90 to-slate-900 border border-emerald-500/30 rounded-2xl p-6 md:p-8 relative overflow-hidden backdrop-blur-sm shadow-2xl">
-                <div class="max-w-2xl">
-                    <span class="text-emerald-400 font-bold text-xs uppercase tracking-widest bg-emerald-950/80 px-3 py-1 rounded-md border border-emerald-800/80">
-                        SUBASTA DE TRÁFICO & VISIBILIDAD
-                    </span>
-                    <h2 class="text-3xl md:text-4xl font-extrabold text-white mt-3 leading-tight">
-                        Puja para posicionar tu Sitio Web o Marca en el <span class="text-emerald-400">Puesto #1</span>.
+            <div class="relative bg-slate-900/60 border border-slate-800 rounded-3xl p-7 md:p-10 backdrop-blur-2xl shadow-2xl overflow-hidden glow-card">
+                <div class="absolute -right-12 -top-12 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                
+                <div class="max-w-2xl relative z-10 space-y-4">
+                    <div class="inline-flex items-center gap-2 bg-emerald-950/80 border border-emerald-500/40 px-3.5 py-1 rounded-full text-[11px] font-bold text-emerald-300 tracking-wider uppercase shadow-inner">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span> SUBASTA EN VIVO • GUAYAS
+                    </div>
+
+                    <h2 class="text-3xl md:text-5xl font-black text-white leading-tight tracking-tight">
+                        Puja para posicionar tu Marca en el <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400">Puesto #1</span>.
                     </h2>
-                    <p class="text-slate-300 text-sm mt-3 leading-relaxed">
-                        Las marcas y proyectos con mayor valor acumulado ocupan los primeros lugares de la lista vertical y reciben la mayor atención de los visitantes.
+
+                    <p class="text-slate-300 text-sm md:text-base leading-relaxed">
+                        Las empresas y proyectos con mayor valor acumulado ocupan la cima del ranking comercial, captando la atención directa de clientes en la provincia del Guayas.
                     </p>
                 </div>
             </div>
         </section>
 
-        <!-- ADVERTENCIA DE REINICIO MENSUAL -->
-        <div class="bg-amber-950/40 border border-amber-500/40 rounded-xl p-4 flex items-start gap-3.5 backdrop-blur-sm">
-            <div class="bg-amber-500/20 text-amber-400 p-2 rounded-lg flex-shrink-0 text-lg">
-                <i class="fa-solid fa-triangle-exclamation"></i>
+        <!-- AVISO DE REINICIO MENSUAL -->
+        <div class="bg-amber-950/30 border border-amber-500/30 rounded-2xl p-4 flex items-start gap-4 backdrop-blur-md hover:border-amber-500/50 transition-colors shadow-lg">
+            <div class="bg-amber-500/20 text-amber-400 p-2.5 rounded-xl flex-shrink-0 text-lg">
+                <i class="fa-solid fa-rotate-left"></i>
             </div>
-            <div class="text-xs leading-relaxed">
-                <strong class="text-amber-300 text-sm block mb-0.5">Valores de Pujas Restablecidos Mensualmente</strong>
-                <span class="text-slate-300">
-                    Para garantizar igualdad de oportunidades a emprendimientos y pequeños negocios de Guayas, la tabla mensual inicia en $0.00 cada 1° de mes. ¡Todos tienen la oportunidad de liderar el mercado local!
-                </span>
+            <div class="text-xs leading-relaxed space-y-0.5">
+                <strong class="text-amber-300 text-sm font-bold block">Tablas Restablecidas Cada 1° de Mes</strong>
+                <p class="text-slate-300">
+                    Para garantizar igualdad de oportunidades a nuevos emprendimientos de Guayaquil, Samborondón y Daule, las pujas mensuales inician en $0.00 al comenzar cada mes.
+                </p>
             </div>
         </div>
 
-        <!-- SECCIÓN 1: SALÓN DE LA FAMA (TOP 3 HISTÓRICO INMORTAL) -->
-        <section>
-            <div class="flex items-center justify-between mb-6">
+        <!-- SECCIÓN 1: RÁNKING INMORTAL (TOP 3 HISTÓRICO) -->
+        <section class="space-y-6">
+            <div class="flex items-center justify-between">
                 <div>
-                    <span class="text-amber-400 font-bold text-xs uppercase tracking-widest bg-amber-950/80 px-3 py-1 rounded-md border border-amber-800">
-                        <i class="fa-solid fa-crown mr-1"></i> Ránking Inmortal Guayas
+                    <span class="bg-amber-500/10 text-amber-400 font-bold text-[11px] uppercase tracking-widest px-3 py-1 rounded-lg border border-amber-500/30 shadow-sm inline-block mb-1">
+                        <i class="fa-solid fa-crown mr-1"></i> Ránking Inmortal
                     </span>
-                    <h2 class="text-2xl font-extrabold text-white mt-2">Top 3 Histórico de Todos los Tiempos</h2>
+                    <h3 class="text-2xl md:text-3xl font-black text-white">Top 3 Histórico de Todos los Tiempos</h3>
                 </div>
-                <span class="text-xs text-slate-400 bg-slate-900/80 px-3 py-1.5 rounded-lg border border-slate-800 hidden md:inline-block">
-                    <i class="fa-solid fa-infinity text-amber-400 mr-1"></i> Récords Permanentes
+                <span class="text-xs text-slate-400 bg-slate-900/80 px-3.5 py-1.5 rounded-xl border border-slate-800 hidden md:inline-flex items-center gap-1.5 shadow-inner">
+                    <i class="fa-solid fa-infinity text-amber-400"></i> Récords Permanentes
                 </span>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {% for h in top3 %}
-                <div class="bg-slate-900/80 border border-amber-500/40 rounded-2xl overflow-hidden shadow-xl flex flex-col justify-between relative group hover:border-amber-400 transition-all backdrop-blur-sm">
-                    <div class="absolute top-3 left-3 z-10">
+                <div class="group relative bg-slate-900/60 border border-amber-500/30 hover:border-amber-400/80 rounded-3xl overflow-hidden shadow-2xl flex flex-col justify-between transition-all duration-300 hover:-translate-y-2 hover:shadow-amber-500/10 backdrop-blur-xl">
+                    
+                    <div class="absolute top-3 left-3 z-20">
                         {% if loop.index == 1 %}
-                            <span class="bg-amber-500 text-slate-950 font-black text-xs px-3 py-1 rounded-full shadow-lg flex items-center gap-1">
-                                <i class="fa-solid fa-trophy"></i> #1 HISTÓRICO
+                            <span class="bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 font-black text-[11px] px-3.5 py-1 rounded-full shadow-lg flex items-center gap-1.5">
+                                <i class="fa-solid fa-trophy"></i> #1 INMORTAL
                             </span>
                         {% elif loop.index == 2 %}
-                            <span class="bg-slate-300 text-slate-950 font-black text-xs px-3 py-1 rounded-full shadow-lg">
-                                #2 HISTÓRICO
+                            <span class="bg-slate-200 text-slate-950 font-black text-[11px] px-3.5 py-1 rounded-full shadow-lg">
+                                #2 INMORTAL
                             </span>
                         {% else %}
-                            <span class="bg-amber-700 text-white font-black text-xs px-3 py-1 rounded-full shadow-lg">
-                                #3 HISTÓRICO
+                            <span class="bg-amber-800 text-white font-black text-[11px] px-3.5 py-1 rounded-full shadow-lg">
+                                #3 INMORTAL
                             </span>
                         {% endif %}
                     </div>
 
                     <div>
                         {% if h.media_url %}
-                        <div class="h-44 overflow-hidden relative bg-slate-950 flex items-center justify-center">
+                        <div class="h-48 overflow-hidden relative bg-slate-950 flex items-center justify-center">
                             {% if h.media_url.endswith(('.mp4', '.webm', '.ogg')) %}
                             <video src="{{ h.media_url }}" controls class="w-full h-full object-cover"></video>
                             {% else %}
-                            <img src="{{ h.media_url }}" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                            <img src="{{ h.media_url }}" alt="" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                             {% endif %}
-                            <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent"></div>
                         </div>
                         {% endif %}
 
-                        <div class="p-5">
-                            <h3 class="text-lg font-bold text-white mb-1">{{ h.nombre }}</h3>
-                            <div class="text-2xl font-black text-emerald-400 mb-3">${{ "%.2f"|format(h.monto) }} <span class="text-xs text-slate-400 font-normal">USD</span></div>
+                        <div class="p-6 space-y-3">
+                            <h4 class="text-xl font-bold text-white group-hover:text-amber-300 transition-colors">{{ h.nombre }}</h4>
+                            <div class="text-3xl font-black text-emerald-400 tracking-tight">${{ "%.2f"|format(h.monto) }} <span class="text-xs text-slate-400 font-normal">USD</span></div>
 
-                            <div class="space-y-2 text-xs text-slate-300 border-t border-slate-800 pt-3">
+                            <div class="space-y-2 text-xs text-slate-300 border-t border-slate-800/80 pt-3">
                                 {% if h.web %}
-                                <p class="truncate">
-                                    <i class="fa-solid fa-globe text-emerald-400 w-4"></i> 
-                                    <a href="{{ h.web }}" target="_blank" rel="noopener noreferrer" class="hover:underline text-emerald-300 font-semibold">
+                                <p class="truncate flex items-center gap-2">
+                                    <i class="fa-solid fa-globe text-emerald-400"></i>
+                                    <a href="{{ h.web }}" target="_blank" rel="noopener noreferrer" class="hover:underline text-emerald-300 font-medium">
                                         {{ h.web.replace('https://', '').replace('http://', '').replace('www.', '') }}
                                     </a>
                                 </p>
                                 {% endif %}
 
                                 {% if h.telefono %}
-                                <p>
-                                    <i class="fa-brands fa-whatsapp text-emerald-400 w-4"></i> 
-                                    <a href="https://wa.me/{{ h.telefono }}" target="_blank" rel="noopener noreferrer" class="hover:underline text-emerald-300 font-semibold">
+                                <p class="flex items-center gap-2">
+                                    <i class="fa-brands fa-whatsapp text-emerald-400"></i>
+                                    <a href="https://wa.me/{{ h.telefono }}" target="_blank" rel="noopener noreferrer" class="hover:underline text-emerald-300 font-medium">
                                         WhatsApp (+{{ h.telefono }})
                                     </a>
                                 </p>
                                 {% endif %}
 
                                 {% if h.redes_url %}
-                                <p>
-                                    <i class="fa-solid fa-at text-emerald-400 w-4"></i> 
-                                    <a href="{{ h.redes_url }}" target="_blank" rel="noopener noreferrer" class="hover:underline text-emerald-300 font-semibold">
+                                <p class="flex items-center gap-2">
+                                    <i class="fa-solid fa-at text-emerald-400"></i>
+                                    <a href="{{ h.redes_url }}" target="_blank" rel="noopener noreferrer" class="hover:underline text-emerald-300 font-medium">
                                         {{ h.redes_nombre }}
                                     </a>
                                 </p>
@@ -382,78 +467,78 @@ HTML_TEMPLATE = """
                         </div>
                     </div>
 
-                    <div class="p-4 bg-slate-950/80 border-t border-slate-800 text-[11px] text-slate-400 flex justify-between items-center">
+                    <div class="p-4 bg-slate-950/90 border-t border-slate-800/80 text-[11px] text-slate-400 flex justify-between items-center">
                         <span>Récord registrado:</span>
-                        <strong class="text-slate-300">{{ h.fecha }}</strong>
+                        <strong class="text-slate-300 font-semibold">{{ h.fecha }}</strong>
                     </div>
+
                 </div>
                 {% endfor %}
             </div>
         </section>
 
-
-        <!-- SECCIÓN 2: RÁNKING MENSUAL (TOP 50 VERTICAL GUAYAS) -->
-        <section>
-            <div class="flex items-center justify-between mb-4">
+        <!-- SECCIÓN 2: TOP 50 MENSUAL VERTICAL -->
+        <section class="space-y-6">
+            <div class="flex items-center justify-between">
                 <div>
-                    <span class="text-emerald-400 font-bold text-xs uppercase tracking-widest bg-emerald-950/80 px-3 py-1 rounded-md border border-emerald-800">
-                        <i class="fa-solid fa-calendar-days mr-1"></i> Ránking {{ mes_actual }}
+                    <span class="bg-emerald-500/10 text-emerald-400 font-bold text-[11px] uppercase tracking-widest px-3 py-1 rounded-lg border border-emerald-500/30 shadow-sm inline-block mb-1">
+                        <i class="fa-solid fa-calendar-days mr-1"></i> Ciclo {{ mes_actual }}
                     </span>
-                    <h2 class="text-2xl font-extrabold text-white mt-2">Top 50 Mensual (Provincia del Guayas)</h2>
+                    <h3 class="text-2xl md:text-3xl font-black text-white">Top 50 Mensual (Provincia del Guayas)</h3>
                 </div>
 
                 <form action="/admin/reiniciar-mes" method="POST">
-                    <button type="submit" onclick="return confirm('¿Deseas simular el reinicio mensual de pujas?')" class="text-xs text-slate-400 hover:text-rose-400 bg-slate-900/80 px-3 py-1.5 rounded-lg border border-slate-800 transition-colors">
-                        <i class="fa-solid fa-rotate-left mr-1"></i> Reiniciar Mes
+                    <button type="submit" onclick="return confirm('¿Deseas reiniciar las pujas de este mes?')" class="text-xs text-slate-400 hover:text-rose-400 bg-slate-900/80 px-3.5 py-2 rounded-xl border border-slate-800 transition-colors shadow-sm">
+                        <i class="fa-solid fa-rotate-left mr-1"></i> Reiniciar
                     </button>
                 </form>
             </div>
 
-            <div class="space-y-3">
+            <div class="space-y-3.5">
                 {% for m in mensual %}
-                <div class="bg-slate-900/70 border border-slate-800/80 rounded-xl p-4 transition-all hover:border-emerald-500/50 flex flex-col md:flex-row md:items-center justify-between gap-4 backdrop-blur-sm shadow-md">
+                <div class="group bg-slate-900/50 border border-slate-800/90 hover:border-emerald-500/50 rounded-2xl p-4 transition-all duration-300 hover:bg-slate-900/80 hover:shadow-xl hover:shadow-emerald-500/5 flex flex-col md:flex-row md:items-center justify-between gap-4 backdrop-blur-xl">
                     
                     <div class="flex items-center gap-4">
-                        <!-- CAJA DE LOGO VECTORIAL -->
+                        <!-- CONTENEDOR DE LOGOTIPO -->
                         <div class="relative flex-shrink-0">
-                            <div class="w-12 h-12 rounded-xl bg-slate-950 border border-slate-700/80 p-0.5 flex items-center justify-center shadow-md overflow-hidden">
+                            <div class="w-14 h-14 rounded-2xl bg-slate-950 border border-slate-800 p-0.5 flex items-center justify-center shadow-lg overflow-hidden group-hover:border-emerald-500/40 transition-colors">
                                 {% if m.logo_url %}
-                                <img src="{{ m.logo_url }}" alt="" class="w-full h-full object-cover rounded-lg">
+                                <img src="{{ m.logo_url }}" alt="" class="w-full h-full object-cover rounded-xl">
                                 {% else %}
-                                <i class="fa-solid fa-building text-slate-500 text-lg"></i>
+                                <i class="fa-solid fa-building text-slate-600 text-xl"></i>
                                 {% endif %}
                             </div>
-                            <span class="absolute -top-1.5 -right-1.5 bg-emerald-500 text-slate-950 text-[10px] font-black px-1.5 py-0.2 rounded-md shadow border border-emerald-400">
+                            <span class="absolute -top-2 -right-2 bg-gradient-to-r from-emerald-500 to-teal-400 text-slate-950 text-[10px] font-black px-2 py-0.5 rounded-lg shadow-lg border border-emerald-300">
                                 #{{ loop.index }}
                             </span>
                         </div>
 
-                        <div>
-                            <h4 class="font-bold text-white text-base flex items-center gap-2">
+                        <div class="space-y-0.5">
+                            <h4 class="font-bold text-white text-lg group-hover:text-emerald-300 transition-colors">
                                 {{ m.nombre }}
                             </h4>
 
                             {% if m.direccion %}
-                            <p class="text-xs text-slate-400 flex items-center gap-1 mt-0.5">
+                            <p class="text-xs text-slate-400 flex items-center gap-1.5">
                                 <i class="fa-solid fa-location-dot text-emerald-400 text-[10px]"></i> {{ m.direccion }}
                             </p>
                             {% endif %}
                             
-                            <div class="flex flex-wrap items-center gap-3 text-xs text-slate-400 mt-1">
+                            <div class="flex flex-wrap items-center gap-3 text-xs text-slate-400 pt-1">
                                 {% if m.web %}
-                                <a href="{{ m.web }}" target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:underline flex items-center gap-1 font-medium">
+                                <a href="{{ m.web }}" target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:underline flex items-center gap-1 font-semibold">
                                     <i class="fa-solid fa-link text-[10px]"></i> {{ m.web.replace('https://', '').replace('http://', '').replace('www.', '') }}
                                 </a>
                                 {% endif %}
 
                                 {% if m.telefono %}
-                                <a href="https://wa.me/{{ m.telefono }}" target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:underline flex items-center gap-1 font-medium">
+                                <a href="https://wa.me/{{ m.telefono }}" target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:underline flex items-center gap-1 font-semibold">
                                     <i class="fa-brands fa-whatsapp text-[11px]"></i> WhatsApp
                                 </a>
                                 {% endif %}
 
                                 {% if m.redes_url %}
-                                <a href="{{ m.redes_url }}" target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:underline flex items-center gap-1 font-medium">
+                                <a href="{{ m.redes_url }}" target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:underline flex items-center gap-1 font-semibold">
                                     <i class="fa-solid fa-at text-[10px]"></i> {{ m.redes_nombre }}
                                 </a>
                                 {% endif %}
@@ -461,89 +546,94 @@ HTML_TEMPLATE = """
                         </div>
                     </div>
 
-                    <div class="flex items-center justify-between md:justify-end gap-4 border-t md:border-t-0 border-slate-800/80 pt-2 md:pt-0">
-                        <span class="text-xl font-black text-emerald-400">${{ "%.2f"|format(m.monto) }} <span class="text-xs text-slate-400 font-normal">USD</span></span>
+                    <div class="flex items-center justify-between md:justify-end gap-4 border-t md:border-t-0 border-slate-800/80 pt-3 md:pt-0">
+                        <span class="text-2xl font-black text-emerald-400">${{ "%.2f"|format(m.monto) }} <span class="text-xs text-slate-400 font-normal">USD</span></span>
                     </div>
 
                 </div>
                 {% else %}
-                <div class="text-center py-8 bg-slate-900/40 border border-slate-800 rounded-xl text-slate-400 text-sm">
+                <div class="text-center py-10 bg-slate-900/30 border border-slate-800 rounded-2xl text-slate-400 text-sm">
                     No hay pujas registradas este mes aún. ¡Sé el primero en posicionarte en Guayas!
                 </div>
                 {% endfor %}
             </div>
         </section>
 
+        <!-- SECCIÓN 3: FORMULARIO DE PUJA CON ZONAS DRAG & DROP DINÁMICAS -->
+        <section id="participar" class="bg-slate-900/60 border border-slate-800 rounded-3xl p-6 md:p-10 backdrop-blur-2xl shadow-2xl relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-80 h-80 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none"></div>
 
-        <!-- SECCIÓN 3: FORMULARIO DE PUJA CON ZONA DRAG & DROP -->
-        <section id="participar" class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 md:p-8 backdrop-blur-sm">
-            <h3 class="text-xl font-bold text-white mb-1 flex items-center gap-2">
-                <i class="fa-solid fa-paper-plane text-emerald-400"></i> Formulario de Posicionamiento (Guayas)
-            </h3>
-            <p class="text-xs text-slate-400 mb-6">Tu puja te posicionará en el **Top 50 Mensual**. Si tu monto supera un récord histórico, ingresarás automáticamente al **Top 3 Inmortal**.</p>
+            <div class="mb-8 space-y-1">
+                <h3 class="text-2xl font-black text-white flex items-center gap-2">
+                    <i class="fa-solid fa-paper-plane text-emerald-400"></i> Formulario de Posicionamiento (Guayas)
+                </h3>
+                <p class="text-xs text-slate-400">Tu puja te posicionará en el **Top 50 Mensual**. Si tu monto supera un récord histórico, ingresarás automáticamente al **Top 3 Inmortal**.</p>
+            </div>
 
-            <form action="/pujar" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <form action="/pujar" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 md:grid-cols-2 gap-5">
                 
                 <div class="md:col-span-2">
-                    <label class="block text-xs font-semibold text-slate-300 mb-1">Nombre de la Persona / Empresa / Marca *</label>
+                    <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Nombre de la Persona / Empresa / Marca *</label>
                     <input type="text" name="nombre" placeholder="Ej: Mi Negocio Guayaquil / Samborondón" required 
-                           class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500">
+                           class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all">
                 </div>
 
                 <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-1">Dirección <span class="text-emerald-400 font-normal">(Ránking Mensual - Opcional)</span></label>
+                    <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Dirección <span class="text-emerald-400 font-normal text-[11px]">(Ránking Mensual - Opcional)</span></label>
                     <input type="text" name="direccion" placeholder="Ej: Puerto Santa Ana, Edificio Torre 1, Guayaquil" 
-                           class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500">
+                           class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all">
                 </div>
 
                 <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-1">Página Web <span class="text-slate-500 font-normal">(Opcional)</span></label>
+                    <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Página Web <span class="text-slate-500 font-normal text-[11px]">(Opcional)</span></label>
                     <input type="url" name="web" placeholder="https://miweb.com" 
-                           class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500">
+                           class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all">
                 </div>
 
                 <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-1">Número de Contacto / WhatsApp <span class="text-slate-500 font-normal">(Opcional)</span></label>
+                    <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Número de Contacto / WhatsApp <span class="text-slate-500 font-normal text-[11px]">(Opcional)</span></label>
                     <input type="text" name="telefono" placeholder="Ej: 0991234567" 
-                           class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500">
+                           class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all">
                 </div>
 
                 <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-1">Redes Sociales <span class="text-slate-500 font-normal">(Opcional)</span></label>
+                    <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Redes Sociales <span class="text-slate-500 font-normal text-[11px]">(Opcional)</span></label>
                     <input type="text" name="redes" placeholder="Ej: @minegociogye o enlace de Instagram" 
-                           class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500">
+                           class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-4 py-3 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all">
                 </div>
 
-                <!-- SUBIDA DE LOGO -->
+                <!-- SUBIDA DE LOGO CON DRAG & DROP INTERACTIVO -->
                 <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-1">Logotipo de la Empresa <span class="text-slate-500 font-normal">(Opcional)</span></label>
-                    <div class="relative border-2 border-dashed border-slate-800 hover:border-emerald-500 rounded-lg p-3 text-center bg-slate-950 transition-colors cursor-pointer group">
-                        <input type="file" name="logo_file" accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" onchange="document.getElementById('logo-text').innerText = this.files[0] ? this.files[0].name : 'Haz clic o arrastra tu imagen aquí'">
-                        <i class="fa-solid fa-image text-slate-400 group-hover:text-emerald-400 mb-1 block"></i>
-                        <span id="logo-text" class="text-xs text-slate-400 block truncate">Haz clic o arrastra tu logo aquí</span>
+                    <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Logotipo de la Empresa <span class="text-slate-500 font-normal text-[11px]">(Opcional)</span></label>
+                    <div id="dropzone-logo" class="relative border-2 border-dashed border-slate-800 hover:border-emerald-500 rounded-2xl p-4 text-center bg-slate-950/60 transition-all duration-300 cursor-pointer group">
+                        <input type="file" name="logo_file" accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" 
+                               onchange="handleFileSelect(this, 'logo-text', 'logo-icon')">
+                        <i id="logo-icon" class="fa-solid fa-image text-slate-500 group-hover:text-emerald-400 text-xl mb-1.5 block transition-colors"></i>
+                        <span id="logo-text" class="text-xs text-slate-400 block truncate font-medium">Haz clic o arrastra tu logo aquí</span>
                     </div>
                 </div>
 
-                <!-- SUBIDA DE FOTO / VIDEO -->
+                <!-- SUBIDA DE FOTO / VIDEO CON DRAG & DROP INTERACTIVO -->
                 <div>
-                    <label class="block text-xs font-semibold text-slate-300 mb-1">Subir Foto o Video <span class="text-slate-500 font-normal">(Opcional)</span></label>
-                    <div class="relative border-2 border-dashed border-slate-800 hover:border-amber-500 rounded-lg p-3 text-center bg-slate-950 transition-colors cursor-pointer group">
-                        <input type="file" name="media_file" accept="image/*,video/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" onchange="document.getElementById('media-text').innerText = this.files[0] ? this.files[0].name : 'Haz clic o arrastra tu foto o video aquí'">
-                        <i class="fa-solid fa-cloud-arrow-up text-slate-400 group-hover:text-amber-400 mb-1 block"></i>
-                        <span id="media-text" class="text-xs text-slate-400 block truncate">Haz clic o arrastra tu foto o video aquí</span>
+                    <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Subir Foto o Video <span class="text-slate-500 font-normal text-[11px]">(Opcional)</span></label>
+                    <div id="dropzone-media" class="relative border-2 border-dashed border-slate-800 hover:border-amber-500 rounded-2xl p-4 text-center bg-slate-950/60 transition-all duration-300 cursor-pointer group">
+                        <input type="file" name="media_file" accept="image/*,video/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" 
+                               onchange="handleFileSelect(this, 'media-text', 'media-icon')">
+                        <i id="media-icon" class="fa-solid fa-cloud-arrow-up text-slate-500 group-hover:text-amber-400 text-xl mb-1.5 block transition-colors"></i>
+                        <span id="media-text" class="text-xs text-slate-400 block truncate font-medium">Haz clic o arrastra tu foto o video aquí</span>
                     </div>
                 </div>
 
-                <div class="md:col-span-2 pt-2">
-                    <label class="block text-xs font-semibold text-slate-300 mb-1">Monto a Pujar ($ USD) *</label>
+                <div class="md:col-span-2 pt-3">
+                    <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">Monto a Pujar ($ USD) *</label>
                     <div class="flex gap-3">
                         <div class="relative flex-1">
-                            <span class="absolute left-3 top-2.5 text-xs text-slate-400">$</span>
+                            <span class="absolute left-4 top-3 text-sm font-bold text-slate-500">$</span>
                             <input type="number" name="monto" min="1" step="1" placeholder="Ej: 2.00" required 
-                                   class="w-full bg-slate-950 border border-slate-800 rounded-lg pl-7 pr-3 py-2.5 text-sm text-white font-bold focus:outline-none focus:border-emerald-500">
+                                   class="w-full bg-slate-950/80 border border-slate-800 rounded-xl pl-8 pr-4 py-3 text-base text-white font-black focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all">
                         </div>
-                        <button type="submit" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold px-6 py-2.5 rounded-lg text-xs transition-all flex items-center gap-2 shadow-lg shadow-emerald-500/20">
-                            <i class="fa-solid fa-bolt"></i> Confirmar Puja
+                        <button type="submit" class="bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black px-8 py-3 rounded-xl text-xs uppercase tracking-wider transition-all shadow-lg shadow-emerald-500/20 hover:shadow-emerald-400/40 hover:scale-[1.02]">
+                            <i class="fa-solid fa-bolt mr-1"></i> Confirmar Puja
                         </button>
                     </div>
                 </div>
@@ -553,15 +643,45 @@ HTML_TEMPLATE = """
 
     </main>
 
-    <!-- FOOTER CON CORREO DE SOPORTE Y CREDITO DE CREADOR -->
-    <footer class="border-t border-slate-800/80 bg-slate-950 py-8 text-center text-xs text-slate-500 space-y-2">
+    <!-- FOOTER ELEGANTE Y COMPLETO -->
+    <footer class="border-t border-slate-800/80 bg-slate-950/90 backdrop-blur-xl py-10 text-center text-xs text-slate-500 space-y-2 mt-12">
         <p>© 2026 MetroPuja.ec — Plataforma de Posicionamiento Competitivo Exclusiva para la Provincia del Guayas.</p>
-        <p class="text-slate-400">
-            Creado por <a href="https://www.instagram.com/nobartys/" target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:underline font-semibold"><i class="fa-brands fa-instagram mr-0.5"></i> @nobartys</a>
+        <p class="text-slate-400 font-medium">
+            Creado por <a href="https://www.instagram.com/nobartys/" target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:underline font-bold inline-flex items-center gap-1"><i class="fa-brands fa-instagram"></i> @nobartys</a>
         </p>
-        <p class="text-slate-400">Soporte Técnico: <a href="mailto:nobartysinformacion@gmail.com" class="text-emerald-400 hover:underline font-semibold">nobartysinformacion@gmail.com</a></p>
-        <p class="text-[10px] text-slate-600 pt-2 max-w-xl mx-auto px-4">Las marcas y logotipos exhibidos en el entorno de demostración pertenecen a sus respectivos titulares de derechos. Si eres representante de una entidad y deseas gestionar o retirar tu presencia, contáctanos a soporte.</p>
+        <p class="text-slate-400">Soporte Técnico: <a href="mailto:nobartysinformacion@gmail.com" class="text-emerald-400 hover:underline font-bold">nobartysinformacion@gmail.com</a></p>
+        <p class="text-[10px] text-slate-600 pt-3 max-w-xl mx-auto px-4 leading-relaxed">Las marcas y logotipos exhibidos en la plataforma de prueba pertenecen a sus respectivos titulares. Si eres representante legal de alguna marca y deseas gestionar o retirar tu perfil, contáctanos vía soporte técnico.</p>
     </footer>
+
+    <!-- SCRIPT DE INTERACCIÓN DRAG & DROP FLUIDO -->
+    <script>
+        function handleFileSelect(input, textId, iconId) {
+            const textElem = document.getElementById(textId);
+            const iconElem = document.getElementById(iconId);
+            if (input.files && input.files[0]) {
+                textElem.innerText = "✓ " + input.files[0].name;
+                textElem.classList.add("text-emerald-400", "font-bold");
+                iconElem.classList.add("text-emerald-400");
+            }
+        }
+
+        // Efectos visuales de Arrastrar Archivo por encima de la zona de carga
+        ['dropzone-logo', 'dropzone-media'].forEach(id => {
+            const zone = document.getElementById(id);
+            if(zone) {
+                zone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    zone.classList.add('dropzone-active');
+                });
+                zone.addEventListener('dragleave', () => {
+                    zone.classList.remove('dropzone-active');
+                });
+                zone.addEventListener('drop', () => {
+                    zone.classList.remove('dropzone-active');
+                });
+            }
+        });
+    </script>
 
 </body>
 </html>

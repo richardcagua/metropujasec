@@ -326,6 +326,28 @@ HTML_TEMPLATE = """
     <meta name="robots" content="index, follow">
     <meta name="google-site-verification" content="bWLB9ITsPbSVEPAe7OAWm9IhH6POgtmoiiM5jzCXYVA" />
 
+    <!-- NOMBRE OFICIAL DE MARCA PARA GOOGLE (REEMPLAZA A RENDER) -->
+    <meta property="og:site_name" content="MetroPuja.ec">
+    <meta property="og:title" content="MetroPuja.ec | Ránking de Posicionamiento Comercial en Guayas">
+    <meta property="og:description" content="MetroPuja.ec es la subasta interactiva de visibilidad comercial para marcas y empresas en Guayaquil, Samborondón, Daule y la provincia del Guayas.">
+    <meta property="og:image" content="https://metropujasec.onrender.com/static/uploads/metro_logo.jpeg">
+    <meta property="og:type" content="website">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "MetroPuja.ec",
+      "alternateName": ["MetroPuja", "MetroPuja Ecuador"],
+      "url": "https://metropujasec.onrender.com/"
+    }
+    </script>
+
+    <!-- LOGO Y FAVICON PARA EL BUSCADOR GOOGLE Y PESTAÑAS -->
+    <link rel="icon" type="image/jpeg" href="/static/uploads/metro_logo.jpeg">
+    <link rel="shortcut icon" type="image/jpeg" href="/static/uploads/metro_logo.jpeg">
+    <link rel="apple-touch-icon" href="/static/uploads/metro_logo.jpeg">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
@@ -410,7 +432,7 @@ HTML_TEMPLATE = """
             <a href="/" class="flex items-center gap-3">
                 <div class="relative group">
                     <div class="absolute -inset-0.5 bg-gradient-to-r from-amber-400 via-emerald-400 to-yellow-500 rounded-xl blur opacity-80 group-hover:opacity-100 transition duration-300"></div>
-                    <div class="relative bg-slate-950 text-amber-400 font-black text-xl px-3.5 py-1 rounded-xl">MP</div>
+                    <img src="/static/uploads/metro_logo.jpeg" alt="MetroPuja Logo" class="relative w-10 h-10 rounded-xl object-cover border border-amber-400/40">
                 </div>
                 <div>
                     <h1 class="font-black text-xl tracking-tight text-white flex items-center gap-1">MetroPuja<span class="text-amber-400">.ec</span></h1>
@@ -839,6 +861,7 @@ PRIVACIDAD_TEMPLATE = """
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Política de Privacidad | MetroPuja.ec</title>
+    <link rel="icon" type="image/jpeg" href="/static/uploads/metro_logo.jpeg">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
@@ -848,7 +871,7 @@ PRIVACIDAD_TEMPLATE = """
     <header class="border-b border-slate-800/80 bg-slate-950/70 backdrop-blur-xl sticky top-0 z-50">
         <div class="max-w-5xl mx-auto px-4 py-3.5 flex justify-between items-center">
             <a href="/" class="flex items-center gap-3">
-                <div class="bg-slate-950 text-amber-400 font-black text-xl px-3.5 py-1 rounded-xl border border-amber-500/40">MP</div>
+                <img src="/static/uploads/metro_logo.jpeg" alt="MetroPuja Logo" class="w-9 h-9 rounded-xl object-cover border border-amber-400/40">
                 <h1 class="font-black text-xl text-white">MetroPuja<span class="text-amber-400">.ec</span></h1>
             </a>
             <a href="/" class="text-xs bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold px-4 py-2 rounded-xl transition">
@@ -897,6 +920,7 @@ TERMINOS_TEMPLATE = """
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Términos de Servicio | MetroPuja.ec</title>
+    <link rel="icon" type="image/jpeg" href="/static/uploads/metro_logo.jpeg">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
@@ -906,7 +930,7 @@ TERMINOS_TEMPLATE = """
     <header class="border-b border-slate-800/80 bg-slate-950/70 backdrop-blur-xl sticky top-0 z-50">
         <div class="max-w-5xl mx-auto px-4 py-3.5 flex justify-between items-center">
             <a href="/" class="flex items-center gap-3">
-                <div class="bg-slate-950 text-amber-400 font-black text-xl px-3.5 py-1 rounded-xl border border-amber-500/40">MP</div>
+                <img src="/static/uploads/metro_logo.jpeg" alt="MetroPuja Logo" class="w-9 h-9 rounded-xl object-cover border border-amber-400/40">
                 <h1 class="font-black text-xl text-white">MetroPuja<span class="text-amber-400">.ec</span></h1>
             </a>
             <a href="/" class="text-xs bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold px-4 py-2 rounded-xl transition">
@@ -955,6 +979,7 @@ SOBRE_NOSOTROS_TEMPLATE = """
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sobre Nosotros | MetroPuja.ec</title>
+    <link rel="icon" type="image/jpeg" href="/static/uploads/metro_logo.jpeg">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
@@ -964,7 +989,7 @@ SOBRE_NOSOTROS_TEMPLATE = """
     <header class="border-b border-slate-800/80 bg-slate-950/70 backdrop-blur-xl sticky top-0 z-50">
         <div class="max-w-5xl mx-auto px-4 py-3.5 flex justify-between items-center">
             <a href="/" class="flex items-center gap-3">
-                <div class="bg-slate-950 text-amber-400 font-black text-xl px-3.5 py-1 rounded-xl border border-amber-500/40">MP</div>
+                <img src="/static/uploads/metro_logo.jpeg" alt="MetroPuja Logo" class="w-9 h-9 rounded-xl object-cover border border-amber-400/40">
                 <h1 class="font-black text-xl text-white">MetroPuja<span class="text-amber-400">.ec</span></h1>
             </a>
             <a href="/" class="text-xs bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold px-4 py-2 rounded-xl transition">
@@ -1030,6 +1055,7 @@ ADMIN_PANEL_TEMPLATE = """
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Administración Protegido | MetroPuja.ec</title>
+    <link rel="icon" type="image/jpeg" href="/static/uploads/metro_logo.jpeg">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>

@@ -326,7 +326,7 @@ HTML_TEMPLATE = """
     <meta name="robots" content="index, follow">
     <meta name="google-site-verification" content="bWLB9ITsPbSVEPAe7OAWm9IhH6POgtmoiiM5jzCXYVA" />
 
-    <!-- NOMBRE OFICIAL DE MARCA PARA GOOGLE (REEMPLAZA A RENDER) -->
+    <!-- NOMBRE OFICIAL DE MARCA PARA GOOGLE (REEMPLAZA A RRENDER) -->
     <meta property="og:site_name" content="MetroPuja.ec">
     <meta property="og:title" content="MetroPuja.ec | Ránking de Posicionamiento Comercial en Guayas">
     <meta property="og:description" content="MetroPuja.ec es la subasta interactiva de visibilidad comercial para marcas y empresas en Guayaquil, Samborondón, Daule y la provincia del Guayas.">
@@ -415,7 +415,7 @@ HTML_TEMPLATE = """
 
         function cerrarModalDeseado(e) {
             if (e.target === e.currentTarget) {
-                e.currentTarget.style.display = 'none';
+                window.location.href = '/cerrar-modal';
             }
         }
     </script>
@@ -472,9 +472,9 @@ HTML_TEMPLATE = """
     <div id="modal-pago" onclick="cerrarModalDeseado(event)" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md overflow-y-auto cursor-pointer">
         <div onclick="event.stopPropagation()" class="bg-slate-900 border border-amber-500/60 rounded-3xl max-w-lg w-full p-6 md:p-8 shadow-2xl space-y-6 relative gold-card-glow cursor-default">
 
-            <button onclick="document.getElementById('modal-pago').style.display='none'" class="absolute top-4 right-4 text-slate-400 hover:text-white text-lg p-2 rounded-full hover:bg-slate-800 transition">
+            <a href="/cerrar-modal" class="absolute top-4 right-4 text-slate-400 hover:text-white text-lg p-2 rounded-full hover:bg-slate-800 transition">
                 <i class="fa-solid fa-xmark"></i>
-            </button>
+            </a>
 
             <div class="text-center space-y-2 border-b border-slate-800 pb-4">
                 <div class="w-12 h-12 bg-amber-500/20 text-amber-400 rounded-2xl flex items-center justify-center mx-auto text-2xl font-bold">
@@ -1177,6 +1177,12 @@ def index():
         err=err,
         puja_pago=puja_pago
     )
+
+
+@app.route('/cerrar-modal')
+def cerrar_modal():
+    session.pop('puja_pago_id', None)
+    return redirect(url_for('index'))
 
 
 @app.route('/privacidad')

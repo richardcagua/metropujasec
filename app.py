@@ -324,6 +324,7 @@ HTML_TEMPLATE = """
     <meta name="keywords" content="MetroPuja, MetroPuja.ec, posicionamiento comercial Guayaquil, publicidad digital Guayas, marcas Samborondón, empresas Daule, subasta web Ecuador, directorio de empresas Guayaquil, SEO Ecuador">
     <meta name="author" content="MetroPuja.ec - @nobartys">
     <meta name="robots" content="index, follow">
+    <meta name="google-site-verification" content="bWLB9ITsPbSVEPAe7OAWm9IhH6POgtmoiiM5jzCXYVA" />
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">

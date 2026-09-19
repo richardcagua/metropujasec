@@ -32,7 +32,6 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # Límite 16MB
 # FILTRO DE MODERACIÓN DE IMÁGENES INAPROPIADAS / SEXUALES (PIL)
 # --------------------------------------------------------------------------
 
-
 def es_imagen_apropiada(file_storage):
     """Escanea la imagen cargada para detectar patrones de desnudez explícita."""
     try:
@@ -91,6 +90,9 @@ LOGO_UG = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewB
 
 mes_actual_nombre = 'Trimestre Q3 - 2026'
 ultimo_trimestre_reset = '2026-Q3'
+
+# PUJAS PENDIENTES DE VERIFICACIÓN
+pujas_pendientes = []
 
 ranking_mensual = [
     {
@@ -178,7 +180,6 @@ def verificar_reinicio_trimestral():
     trimestre_actual = (ahora.month - 1) // 3 + 1
     clave_trimestre = f'{ahora.year}-Q{trimestre_actual}'
 
-    # Si inicia un nuevo trimestre el 1° de mes, reinicia montos a $0 conservando las marcas
     if ultimo_trimestre_reset != clave_trimestre and ahora.day == 1:
         for item in ranking_mensual:
             item['monto'] = 0.00
@@ -352,6 +353,18 @@ HTML_TEMPLATE = """
 
         .bg-grid-pattern { background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px); background-size: 24px 24px; }
     </style>
+
+    <script>
+        function copiarDato(texto, elementoBtn) {
+            navigator.clipboard.writeText(texto).then(() => {
+                const iconoOriginal = elementoBtn.innerHTML;
+                elementoBtn.innerHTML = '<i class="fa-solid fa-check text-emerald-400"></i>';
+                setTimeout(() => {
+                    elementoBtn.innerHTML = iconoOriginal;
+                }, 1500);
+            });
+        }
+    </script>
 </head>
 <body class="text-slate-100 min-h-screen relative overflow-x-hidden bg-grid-pattern selection:bg-amber-400 selection:text-slate-950">
 
@@ -396,6 +409,97 @@ HTML_TEMPLATE = """
         <div class="bg-rose-950/80 border border-rose-500/60 text-rose-200 px-5 py-3.5 rounded-2xl flex items-center gap-3 text-sm shadow-2xl backdrop-blur-md">
             <i class="fa-solid fa-shield-cat text-rose-400 text-xl animate-bounce"></i>
             <span class="font-semibold">{{ err }}</span>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- MODAL DE PAGO / DATOS BANCARIOS -->
+    {% if puja_pago %}
+    <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md overflow-y-auto">
+        <div class="bg-slate-900 border border-amber-500/60 rounded-3xl max-w-lg w-full p-6 md:p-8 shadow-2xl space-y-6 relative gold-card-glow">
+            <div class="text-center space-y-2 border-b border-slate-800 pb-4">
+                <div class="w-12 h-12 bg-amber-500/20 text-amber-400 rounded-2xl flex items-center justify-center mx-auto text-2xl font-bold">
+                    <i class="fa-solid fa-building-columns"></i>
+                </div>
+                <h3 class="text-2xl font-black text-white">Datos para la Transferencia</h3>
+                <p class="text-xs text-slate-400">Realiza la transferencia bancaria por un monto de <strong class="text-amber-400 font-bold">${{ "%.2f"|format(puja_pago.monto) }} USD</strong> para completar tu puja para <strong>{{ puja_pago.nombre }}</strong>.</p>
+            </div>
+
+            <!-- CUADROS DE DATOS COPIABLES -->
+            <div class="space-y-3 text-xs">
+
+                <div class="bg-slate-950 border border-slate-800 rounded-xl p-3 flex justify-between items-center">
+                    <div>
+                        <span class="text-slate-400 block text-[10px] uppercase font-bold">Nombre del Titular</span>
+                        <strong class="text-white text-sm">Richard Cagua Velásquez</strong>
+                    </div>
+                    <button onclick="copiarDato('Richard Cagua Velásquez', this)" title="Copiar nombre" class="bg-slate-800 hover:bg-slate-700 text-amber-400 p-2.5 rounded-lg border border-slate-700 transition">
+                        <i class="fa-regular fa-copy"></i>
+                    </button>
+                </div>
+
+                <div class="bg-slate-950 border border-slate-800 rounded-xl p-3 flex justify-between items-center">
+                    <div>
+                        <span class="text-slate-400 block text-[10px] uppercase font-bold">Cédula de Identidad (CI)</span>
+                        <strong class="text-white text-sm">0926903469</strong>
+                    </div>
+                    <button onclick="copiarDato('0926903469', this)" title="Copiar CI" class="bg-slate-800 hover:bg-slate-700 text-amber-400 p-2.5 rounded-lg border border-slate-700 transition">
+                        <i class="fa-regular fa-copy"></i>
+                    </button>
+                </div>
+
+                <div class="bg-slate-950 border border-slate-800 rounded-xl p-3 flex justify-between items-center">
+                    <div>
+                        <span class="text-slate-400 block text-[10px] uppercase font-bold">Tipo de Cuenta</span>
+                        <strong class="text-white text-sm">Cuenta de ahorros</strong>
+                    </div>
+                    <button onclick="copiarDato('Cuenta de ahorros', this)" title="Copiar tipo" class="bg-slate-800 hover:bg-slate-700 text-amber-400 p-2.5 rounded-lg border border-slate-700 transition">
+                        <i class="fa-regular fa-copy"></i>
+                    </button>
+                </div>
+
+                <div class="bg-slate-950 border border-slate-800 rounded-xl p-3 flex justify-between items-center">
+                    <div>
+                        <span class="text-slate-400 block text-[10px] uppercase font-bold">Banco</span>
+                        <strong class="text-white text-sm">Banco Pacífico</strong>
+                    </div>
+                    <button onclick="copiarDato('Banco Pacífico', this)" title="Copiar Banco" class="bg-slate-800 hover:bg-slate-700 text-amber-400 p-2.5 rounded-lg border border-slate-700 transition">
+                        <i class="fa-regular fa-copy"></i>
+                    </button>
+                </div>
+
+                <div class="bg-slate-950 border border-slate-800 rounded-xl p-3 flex justify-between items-center">
+                    <div>
+                        <span class="text-slate-400 block text-[10px] uppercase font-bold">Número de Cuenta</span>
+                        <strong class="text-white text-sm">1058068977</strong>
+                    </div>
+                    <button onclick="copiarDato('1058068977', this)" title="Copiar número de cuenta" class="bg-slate-800 hover:bg-slate-700 text-amber-400 p-2.5 rounded-lg border border-slate-700 transition">
+                        <i class="fa-regular fa-copy"></i>
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- ADVERTENCIA DE TIEMPO -->
+            <div class="bg-amber-950/50 border border-amber-500/40 rounded-xl p-3 text-center">
+                <p class="text-amber-300 text-xs font-semibold">
+                    <i class="fa-solid fa-clock mr-1"></i> Una vez pagado, el proceso de verificación puede demorar entre 1 a 3h.
+                </p>
+            </div>
+
+            <!-- FORMULARIO PARA SUBIR CAPTURA -->
+            <form action="/subir-comprobante" method="POST" enctype="multipart/form-data" class="space-y-4 pt-2">
+                <input type="hidden" name="puja_id" value="{{ puja_pago.id }}">
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">Subir Captura del Comprobante *</label>
+                    <input type="file" name="comprobante_file" accept="image/*" required 
+                           class="w-full text-xs text-slate-300 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-amber-400 file:text-slate-950 hover:file:bg-amber-300 cursor-pointer bg-slate-950 border border-slate-800 rounded-xl p-2">
+                </div>
+
+                <button type="submit" class="w-full bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black py-3 rounded-xl text-xs uppercase tracking-wider shadow-lg transition">
+                    <i class="fa-solid fa-check-double mr-1"></i> Verificar Pago
+                </button>
+            </form>
         </div>
     </div>
     {% endif %}
@@ -719,6 +823,38 @@ ADMIN_PANEL_TEMPLATE = """
         </div>
         {% endif %}
 
+        <!-- SECCIÓN DE PUJAS PENDIENTES DE VERIFICACIÓN -->
+        {% if pendientes %}
+        <div class="bg-slate-900 border border-amber-500/50 rounded-2xl p-6 space-y-4">
+            <h2 class="text-lg font-bold text-amber-400"><i class="fa-solid fa-hourglass-half"></i> Transferencias Pendientes por Verificar</h2>
+            <div class="space-y-3">
+                {% for p in pendientes %}
+                <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 flex flex-col md:flex-row gap-4 items-center justify-between">
+                    <div>
+                        <h4 class="font-bold text-white text-base">{{ p.nombre }}</h4>
+                        <p class="text-xs text-amber-400 font-bold">Monto: ${{ "%.2f"|format(p.monto) }} USD</p>
+                        <p class="text-xs text-slate-400">Fecha: {{ p.fecha }}</p>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                        {% if p.comprobante_url %}
+                        <a href="{{ p.comprobante_url }}" target="_blank" class="text-xs bg-slate-800 hover:bg-slate-700 text-amber-400 px-3 py-2 rounded-lg font-medium">
+                            <i class="fa-solid fa-image mr-1"></i> Ver Comprobante
+                        </a>
+                        {% endif %}
+                        <a href="/admin/aprobar-pago/{{ p.id }}" class="text-xs bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black px-4 py-2 rounded-lg">
+                            <i class="fa-solid fa-check mr-1"></i> Aprobar Pago
+                        </a>
+                        <a href="/admin/rechazar-pago/{{ p.id }}" onclick="return confirm('¿Deseas rechazar esta puja?')" class="text-xs bg-rose-600 hover:bg-rose-500 text-white font-bold px-3 py-2 rounded-lg">
+                            <i class="fa-solid fa-xmark"></i>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
         <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4">
             <h2 class="text-lg font-bold text-white"><i class="fa-solid fa-list-check text-amber-400"></i> Editar Ránking Trimestral Actual</h2>
 
@@ -763,6 +899,13 @@ def index():
     verificar_reinicio_trimestral()
     msg = request.args.get('msg', '')
     err = request.args.get('err', '')
+
+    puja_pago_id = session.get('puja_pago_id')
+    puja_pago = None
+    if puja_pago_id:
+        puja_pago = next((p for p in pujas_pendientes if p['id'] == puja_pago_id and p['estado'] == 'esperando_pago'),
+                         None)
+
     return render_template_string(
         HTML_TEMPLATE,
         top3=top3_historico,
@@ -770,6 +913,7 @@ def index():
         mes_actual=mes_actual_nombre,
         msg=msg,
         err=err,
+        puja_pago=puja_pago
     )
 
 
@@ -802,7 +946,9 @@ def pujar():
         media_url = guardar_archivo(media_file) if media_file else ''
 
         if nombre and monto > 0:
-            nuevo_registro = {
+            puja_id = len(pujas_pendientes) + 1
+            nueva_puja = {
+                'id': puja_id,
                 'nombre': nombre,
                 'direccion': direccion,
                 'web': web,
@@ -811,21 +957,40 @@ def pujar():
                 'logo_url': logo_url,
                 'media_url': media_url,
                 'monto': monto,
+                'comprobante_url': '',
+                'estado': 'esperando_pago',
+                'fecha': datetime.now().strftime('%Y-%m-%d %H:%M')
             }
 
-            actualizar_rankings(nuevo_registro)
-            return redirect(
-                url_for(
-                    'index',
-                    msg=(
-                        f'¡Puja de ${monto:.2f} USD registrada exitosamente para'
-                        f' {nombre}!'
-                    ),
-                )
-            )
+            pujas_pendientes.append(nueva_puja)
+            session['puja_pago_id'] = puja_id
+            return redirect(url_for('index'))
 
     except Exception as e:
         print(f'Error registrando puja: {e}')
+
+    return redirect(url_for('index'))
+
+
+@app.route('/subir-comprobante', methods=['POST'])
+def subir_comprobante():
+    try:
+        puja_id = int(request.form.get('puja_id', 0))
+        comprobante_file = request.files.get('comprobante_file')
+
+        if comprobante_file and comprobante_file.filename != '':
+            comprobante_url = guardar_archivo(comprobante_file)
+            for p in pujas_pendientes:
+                if p['id'] == puja_id:
+                    p['comprobante_url'] = comprobante_url
+                    p['estado'] = 'en_verificacion'
+                    break
+
+            session.pop('puja_pago_id', None)
+            return redirect(
+                url_for('index', msg='Verificación en proceso. Tu pago está siendo revisado por nuestro equipo.'))
+    except Exception as e:
+        print(f'Error al subir comprobante: {e}')
 
     return redirect(url_for('index'))
 
@@ -874,9 +1039,32 @@ def admin_panel():
     if not session.get('admin_authenticated'):
         return redirect(url_for('admin_login'))
     msg = request.args.get('msg', '')
+    pendientes = [p for p in pujas_pendientes if p['estado'] == 'en_verificacion']
     return render_template_string(
-        ADMIN_PANEL_TEMPLATE, mensual=ranking_mensual, msg=msg
+        ADMIN_PANEL_TEMPLATE, mensual=ranking_mensual, pendientes=pendientes, msg=msg
     )
+
+
+@app.route('/admin/aprobar-pago/<int:puja_id>')
+def aprobar_pago(puja_id):
+    if not session.get('admin_authenticated'):
+        return redirect(url_for('admin_login'))
+    global pujas_pendientes
+    puja = next((p for p in pujas_pendientes if p['id'] == puja_id), None)
+    if puja:
+        actualizar_rankings(puja)
+        pujas_pendientes = [p for p in pujas_pendientes if p['id'] != puja_id]
+        return redirect(url_for('admin_panel', msg=f'¡Pago verificado y {puja["nombre"]} publicado exitosamente!'))
+    return redirect(url_for('admin_panel'))
+
+
+@app.route('/admin/rechazar-pago/<int:puja_id>')
+def rechazar_pago(puja_id):
+    if not session.get('admin_authenticated'):
+        return redirect(url_for('admin_login'))
+    global pujas_pendientes
+    pujas_pendientes = [p for p in pujas_pendientes if p['id'] != puja_id]
+    return redirect(url_for('admin_panel', msg='Puja rechazada.'))
 
 
 @app.route('/admin/reiniciar-trimestre', methods=['POST'])

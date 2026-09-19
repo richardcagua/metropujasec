@@ -937,7 +937,8 @@ def index():
     msg = request.args.get('msg', '')
     err = request.args.get('err', '')
 
-    puja_pago_id = session.get('puja_pago_id')
+    # Extrae y remueve el ID de la sesión para mostrar el modal solo una vez
+    puja_pago_id = session.pop('puja_pago_id', None)
     puja_pago = None
     if puja_pago_id:
         puja_pago = next((p for p in pujas_pendientes if p['id'] == puja_pago_id and p['estado'] == 'esperando_pago'),

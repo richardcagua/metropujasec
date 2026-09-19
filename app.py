@@ -407,7 +407,7 @@ HTML_TEMPLATE = """
     <!-- NAVBAR -->
     <header class="border-b border-slate-800/80 bg-slate-950/70 backdrop-blur-xl sticky top-0 z-50 shadow-2xl">
         <div class="max-w-5xl mx-auto px-4 py-3.5 flex justify-between items-center">
-            <div class="flex items-center gap-3">
+            <a href="/" class="flex items-center gap-3">
                 <div class="relative group">
                     <div class="absolute -inset-0.5 bg-gradient-to-r from-amber-400 via-emerald-400 to-yellow-500 rounded-xl blur opacity-80 group-hover:opacity-100 transition duration-300"></div>
                     <div class="relative bg-slate-950 text-amber-400 font-black text-xl px-3.5 py-1 rounded-xl">MP</div>
@@ -416,7 +416,7 @@ HTML_TEMPLATE = """
                     <h1 class="font-black text-xl tracking-tight text-white flex items-center gap-1">MetroPuja<span class="text-amber-400">.ec</span></h1>
                     <p class="text-[11px] text-slate-400 font-medium">Exclusivo Guayas • Guayaquil • Samborondón • Daule</p>
                 </div>
-            </div>
+            </a>
 
             <div class="flex items-center gap-3">
                 <a href="#participar" class="bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 hover:from-amber-300 hover:to-yellow-200 text-slate-950 font-black text-xs px-5 py-2.5 rounded-xl flex items-center gap-2 shadow-lg transition-all hover:scale-105">
@@ -809,14 +809,213 @@ HTML_TEMPLATE = """
 
     </main>
 
-    <footer class="border-t border-slate-800/80 bg-slate-950/90 py-10 text-center text-xs text-slate-500 space-y-2">
+    <footer class="border-t border-slate-800/80 bg-slate-950/90 py-10 text-center text-xs text-slate-500 space-y-3">
         <p>© 2026 MetroPuja.ec — Plataforma de Posicionamiento Competitivo Exclusiva para la Provincia del Guayas.</p>
+        <div class="flex justify-center flex-wrap gap-4 text-[11px] font-medium text-slate-400">
+            <a href="/privacidad" class="hover:text-amber-400 transition">Política de Privacidad</a>
+            <span class="text-slate-700">•</span>
+            <a href="/terminos" class="hover:text-amber-400 transition">Términos de Servicio</a>
+            <span class="text-slate-700">•</span>
+            <a href="/sobre-nosotros" class="hover:text-amber-400 transition">Sobre Nosotros</a>
+        </div>
         <p class="text-slate-400 font-medium">
             Creado por <a href="https://www.instagram.com/nobartys/" target="_blank" rel="noopener noreferrer" class="text-amber-400 hover:underline font-bold inline-flex items-center gap-1"><i class="fa-brands fa-instagram"></i> @nobartys</a>
         </p>
         <p class="text-slate-400">Soporte Técnico: <a href="mailto:nobartysinformacion@gmail.com" class="text-amber-400 hover:underline font-bold">nobartysinformacion@gmail.com</a></p>
     </footer>
 
+</body>
+</html>
+"""
+
+# --------------------------------------------------------------------------
+# PLANTILLAS HTML PARA PÁGINAS LEGALES Y DE INFORMACIÓN
+# --------------------------------------------------------------------------
+
+PRIVACIDAD_TEMPLATE = """
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Política de Privacidad | MetroPuja.ec</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <style> body { font-family: 'Outfit', sans-serif; background-color: #030712; } </style>
+</head>
+<body class="text-slate-100 min-h-screen bg-slate-950">
+    <header class="border-b border-slate-800/80 bg-slate-950/70 backdrop-blur-xl sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-4 py-3.5 flex justify-between items-center">
+            <a href="/" class="flex items-center gap-3">
+                <div class="bg-slate-950 text-amber-400 font-black text-xl px-3.5 py-1 rounded-xl border border-amber-500/40">MP</div>
+                <h1 class="font-black text-xl text-white">MetroPuja<span class="text-amber-400">.ec</span></h1>
+            </a>
+            <a href="/" class="text-xs bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold px-4 py-2 rounded-xl transition">
+                <i class="fa-solid fa-arrow-left mr-1"></i> Volver al Inicio
+            </a>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 py-12 space-y-8">
+        <div class="border-b border-slate-800 pb-6">
+            <h2 class="text-3xl font-black text-white">Política de Privacidad</h2>
+            <p class="text-xs text-amber-400 font-medium mt-1">Última actualización: Septiembre 2026</p>
+        </div>
+
+        <div class="space-y-6 text-slate-300 text-sm leading-relaxed">
+            <p>En <strong>MetroPuja.ec</strong> (disponible en metropujasec.onrender.com), accesible desde la provincia del Guayas y todo el Ecuador, la privacidad de nuestros usuarios y anunciantes es una de nuestras máximas prioridades. Este documento describe el tipo de información que recopilamos, cómo la almacenamos y el uso que le damos.</p>
+
+            <h3 class="text-lg font-bold text-white border-l-4 border-amber-400 pl-3">1. Recopilación de Información</h3>
+            <p>Al utilizar nuestro formulario de puja comercial o interactuar con el sitio web, recopilamos voluntariamente información como el nombre comercial o marca, dirección, número de contacto/WhatsApp, enlaces a redes sociales y archivos cargados (logotipos, comprobantes o material promocional).</p>
+
+            <h3 class="text-lg font-bold text-white border-l-4 border-amber-400 pl-3">2. Archivos de Registro (Log Files)</h3>
+            <p>MetroPuja.ec sigue un procedimiento estándar de uso de archivos de registro. Estos archivos registran a los visitantes cuando navegan por el sitio web. La información incluye direcciones IP, tipo de navegador, proveedor de servicios de Internet (ISP), fecha/hora y número de clics. Esta información no está vinculada a datos de identificación personal y se utiliza exclusivamente para analizar tendencias y administrar el portal.</p>
+
+            <h3 class="text-lg font-bold text-white border-l-4 border-amber-400 pl-3">3. Cookies y Publicidad de Terceros (Google AdSense)</h3>
+            <p>Como cualquier otro portal comercial, MetroPuja.ec utiliza cookies para optimizar la experiencia de navegación. Google, como proveedor externo, utiliza cookies (como la cookie DART) para publicar anuncios en nuestro sitio web basados en las visitas previas de los usuarios. Los usuarios pueden inhabilitar el uso de la cookie de DART visitando la Política de Privacidad de la red de anuncios de Google en: <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener noreferrer" class="text-amber-400 underline">https://policies.google.com/technologies/ads</a></p>
+
+            <h3 class="text-lg font-bold text-white border-l-4 border-amber-400 pl-3">4. Moderación y Seguridad de Datos</h3>
+            <p>Todo el contenido visual subido por los usuarios se procesa a través de filtros automatizados de seguridad e inspección moderada para garantizar que cumple con los estándares comunitarios y legales, prohibiendo contenido explícito, ofensivo o engañoso.</p>
+
+            <h3 class="text-lg font-bold text-white border-l-4 border-amber-400 pl-3">5. Consentimiento</h3>
+            <p>Al utilizar nuestro portal web y enviar información mediante nuestros formularios, usted acepta nuestra Política de Privacidad y está de acuerdo con sus términos.</p>
+        </div>
+    </main>
+
+    <footer class="border-t border-slate-800 bg-slate-950 py-6 text-center text-xs text-slate-500">
+        © 2026 MetroPuja.ec — Todos los derechos reservados.
+    </footer>
+</body>
+</html>
+"""
+
+TERMINOS_TEMPLATE = """
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Términos de Servicio | MetroPuja.ec</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <style> body { font-family: 'Outfit', sans-serif; background-color: #030712; } </style>
+</head>
+<body class="text-slate-100 min-h-screen bg-slate-950">
+    <header class="border-b border-slate-800/80 bg-slate-950/70 backdrop-blur-xl sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-4 py-3.5 flex justify-between items-center">
+            <a href="/" class="flex items-center gap-3">
+                <div class="bg-slate-950 text-amber-400 font-black text-xl px-3.5 py-1 rounded-xl border border-amber-500/40">MP</div>
+                <h1 class="font-black text-xl text-white">MetroPuja<span class="text-amber-400">.ec</span></h1>
+            </a>
+            <a href="/" class="text-xs bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold px-4 py-2 rounded-xl transition">
+                <i class="fa-solid fa-arrow-left mr-1"></i> Volver al Inicio
+            </a>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 py-12 space-y-8">
+        <div class="border-b border-slate-800 pb-6">
+            <h2 class="text-3xl font-black text-white">Términos y Condiciones de Servicio</h2>
+            <p class="text-xs text-amber-400 font-medium mt-1">Reglamento Oficial de Posicionamiento Comercial</p>
+        </div>
+
+        <div class="space-y-6 text-slate-300 text-sm leading-relaxed">
+            <h3 class="text-lg font-bold text-white border-l-4 border-emerald-400 pl-3">1. Aceptación de los Términos</h3>
+            <p>Al ingresar, interactuar o realizar una puja en <strong>MetroPuja.ec</strong>, usted acepta quedar vinculado por los presentes Términos y Condiciones de Servicio y por todas las leyes aplicables en la República del Ecuador.</p>
+
+            <h3 class="text-lg font-bold text-white border-l-4 border-emerald-400 pl-3">2. Funcionamiento del Ranking y Pujas</h3>
+            <p>MetroPuja.ec es una plataforma de posicionamiento comercial basado en dinamismo competitivo:</p>
+            <ul class="list-disc pl-6 space-y-2 text-slate-300">
+                <li><strong>Mecanismo de Posición:</strong> Las empresas se ordenan automáticamente de acuerdo al monto acumulado en sus pujas. A mayor valor validado, mayor será el puesto de visibilidad asignado.</li>
+                <li><strong>Reinicio Trimestral:</strong> El primer día de cada trimestre, los contadores numéricos de las pujas acumuladas se restablecen a $0.00 USD. Sin embargo, las marcas **conservan su orden y posición estratégica** alcanzada en la tabla, permitiendo continuar sumando pujas en el nuevo ciclo.</li>
+                <li><strong>Verificación de Transferencias:</strong> Toda puja enviada requiere la verificación manual del comprobante de pago bancario por el equipo administrativo antes de ser reflejada públicamente.</li>
+            </ul>
+
+            <h3 class="text-lg font-bold text-white border-l-4 border-emerald-400 pl-3">3. Licencia de Contenido y Propiedad Intelectual</h3>
+            <p>Los anunciantes garantizan que poseen los derechos comerciales o licencias sobre los logotipos, marcas y archivos multimedia compartidos en la plataforma. MetroPuja.ec se reserva el derecho de rechazar o eliminar cualquier contenido que vulnere derechos de autor o leyes vigentes.</p>
+
+            <h3 class="text-lg font-bold text-white border-l-4 border-emerald-400 pl-3">4. Politica de No Reembolso</h3>
+            <p>Debido a la naturaleza inmediata del servicio de visibilidad publicitaria y posicionamiento digital, las transferencias y pujas confirmadas no son reembolsables una vez que el pago ha sido validado y publicado en la plataforma.</p>
+        </div>
+    </main>
+
+    <footer class="border-t border-slate-800 bg-slate-950 py-6 text-center text-xs text-slate-500">
+        © 2026 MetroPuja.ec — Todos los derechos reservados.
+    </footer>
+</body>
+</html>
+"""
+
+SOBRE_NOSOTROS_TEMPLATE = """
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre Nosotros | MetroPuja.ec</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <style> body { font-family: 'Outfit', sans-serif; background-color: #030712; } </style>
+</head>
+<body class="text-slate-100 min-h-screen bg-slate-950">
+    <header class="border-b border-slate-800/80 bg-slate-950/70 backdrop-blur-xl sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-4 py-3.5 flex justify-between items-center">
+            <a href="/" class="flex items-center gap-3">
+                <div class="bg-slate-950 text-amber-400 font-black text-xl px-3.5 py-1 rounded-xl border border-amber-500/40">MP</div>
+                <h1 class="font-black text-xl text-white">MetroPuja<span class="text-amber-400">.ec</span></h1>
+            </a>
+            <a href="/" class="text-xs bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold px-4 py-2 rounded-xl transition">
+                <i class="fa-solid fa-arrow-left mr-1"></i> Volver al Inicio
+            </a>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-4 py-12 space-y-8">
+        <div class="border-b border-slate-800 pb-6 text-center">
+            <span class="bg-amber-500/10 text-amber-400 font-bold text-xs uppercase tracking-widest px-3.5 py-1 rounded-full border border-amber-500/30">Plataforma Digital de Posicionamiento</span>
+            <h2 class="text-3xl md:text-4xl font-black text-white mt-3">Sobre MetroPuja.ec</h2>
+            <p class="text-sm text-slate-400 max-w-xl mx-auto mt-2">Impulsando la visibilidad de marcas, comercios y emprendimientos en la provincia del Guayas.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-3">
+                <div class="w-10 h-10 bg-amber-500/20 text-amber-400 rounded-xl flex items-center justify-center text-xl font-bold">
+                    <i class="fa-solid fa-rocket"></i>
+                </div>
+                <h3 class="text-lg font-bold text-white">Nuestra Misión</h3>
+                <p class="text-xs text-slate-300 leading-relaxed">
+                    Democratizar y dinamizar la publicidad digital en Guayaquil, Samborondón, Daule y toda la provincia del Guayas, permitiendo que tanto grandes empresas como emprendedores locales compitan abiertamente por las mejores posiciones de visibilidad comercial en internet.
+                </p>
+            </div>
+
+            <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-3">
+                <div class="w-10 h-10 bg-emerald-500/20 text-emerald-400 rounded-xl flex items-center justify-center text-xl font-bold">
+                    <i class="fa-solid fa-chart-line"></i>
+                </div>
+                <h3 class="text-lg font-bold text-white">Modelo Transparente</h3>
+                <p class="text-xs text-slate-300 leading-relaxed">
+                    Ofrecemos una alternativa transparente sin contratos mensuales obligatorios ni costos ocultos. Las marcas deciden cuánto valor asignar a su posicionamiento, obteniendo un lugar destacado acorde a su inversión.
+                </p>
+            </div>
+        </div>
+
+        <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 text-center space-y-3">
+            <h3 class="text-base font-bold text-white">Desarrollo y Soporte Oficial</h3>
+            <p class="text-xs text-slate-400">
+                MetroPuja.ec está desarrollado bajo altos estándares de rendimiento y seguridad web por el equipo de <strong>@nobartys</strong>.
+            </p>
+            <p class="text-xs text-amber-400 font-semibold">
+                Contacto de Soporte: <a href="mailto:nobartysinformacion@gmail.com" class="underline">nobartysinformacion@gmail.com</a>
+            </p>
+        </div>
+    </main>
+
+    <footer class="border-t border-slate-800 bg-slate-950 py-6 text-center text-xs text-slate-500">
+        © 2026 MetroPuja.ec — Todos los derechos reservados.
+    </footer>
 </body>
 </html>
 """
@@ -937,8 +1136,7 @@ def index():
     msg = request.args.get('msg', '')
     err = request.args.get('err', '')
 
-    # Extrae y remueve el ID de la sesión para mostrar el modal solo una vez
-    puja_pago_id = session.pop('puja_pago_id', None)
+    puja_pago_id = session.get('puja_pago_id')
     puja_pago = None
     if puja_pago_id:
         puja_pago = next((p for p in pujas_pendientes if p['id'] == puja_pago_id and p['estado'] == 'esperando_pago'),
@@ -953,6 +1151,21 @@ def index():
         err=err,
         puja_pago=puja_pago
     )
+
+
+@app.route('/privacidad')
+def privacidad():
+    return render_template_string(PRIVACIDAD_TEMPLATE)
+
+
+@app.route('/terminos')
+def terminos():
+    return render_template_string(TERMINOS_TEMPLATE)
+
+
+@app.route('/sobre-nosotros')
+def sobre_nosotros():
+    return render_template_string(SOBRE_NOSOTROS_TEMPLATE)
 
 
 @app.route('/pujar', methods=['POST'])

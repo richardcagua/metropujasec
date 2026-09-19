@@ -356,13 +356,44 @@ HTML_TEMPLATE = """
 
     <script>
         function copiarDato(texto, elementoBtn) {
-            navigator.clipboard.writeText(texto).then(() => {
-                const iconoOriginal = elementoBtn.innerHTML;
-                elementoBtn.innerHTML = '<i class="fa-solid fa-check text-emerald-400"></i>';
+            function indicarCopiado() {
+                const contenidoOriginal = elementoBtn.innerHTML;
+                elementoBtn.innerHTML = '<i class="fa-solid fa-check text-emerald-400 mr-1"></i><span class="text-emerald-400 font-bold text-[11px]">Copiado</span>';
                 setTimeout(() => {
-                    elementoBtn.innerHTML = iconoOriginal;
+                    elementoBtn.innerHTML = contenidoOriginal;
                 }, 1500);
-            });
+            }
+
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(texto).then(indicarCopiado).catch(() => {
+                    copiarFallback(texto, indicarCopiado);
+                });
+            } else {
+                copiarFallback(texto, indicarCopiado);
+            }
+        }
+
+        function copiarFallback(texto, callback) {
+            const area = document.createElement('textarea');
+            area.value = texto;
+            area.style.position = 'fixed';
+            area.style.opacity = '0';
+            document.body.appendChild(area);
+            area.focus();
+            area.select();
+            try {
+                document.execCommand('copy');
+                if (callback) callback();
+            } catch (e) {
+                console.error('Error al copiar: ', e);
+            }
+            document.body.removeChild(area);
+        }
+
+        function cerrarModalDeseado(e) {
+            if (e.target === e.currentTarget) {
+                e.currentTarget.style.display = 'none';
+            }
         }
     </script>
 </head>
@@ -413,10 +444,15 @@ HTML_TEMPLATE = """
     </div>
     {% endif %}
 
-    <!-- MODAL DE PAGO / DATOS BANCARIOS -->
+    <!-- MODAL DE PAGO / DATOS BANCARIOS CON CIERRE AL DAR CLIC EN ZONA DIFUSA -->
     {% if puja_pago %}
-    <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md overflow-y-auto">
-        <div class="bg-slate-900 border border-amber-500/60 rounded-3xl max-w-lg w-full p-6 md:p-8 shadow-2xl space-y-6 relative gold-card-glow">
+    <div id="modal-pago" onclick="cerrarModalDeseado(event)" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md overflow-y-auto cursor-pointer">
+        <div onclick="event.stopPropagation()" class="bg-slate-900 border border-amber-500/60 rounded-3xl max-w-lg w-full p-6 md:p-8 shadow-2xl space-y-6 relative gold-card-glow cursor-default">
+
+            <button onclick="document.getElementById('modal-pago').style.display='none'" class="absolute top-4 right-4 text-slate-400 hover:text-white text-lg p-2 rounded-full hover:bg-slate-800 transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
             <div class="text-center space-y-2 border-b border-slate-800 pb-4">
                 <div class="w-12 h-12 bg-amber-500/20 text-amber-400 rounded-2xl flex items-center justify-center mx-auto text-2xl font-bold">
                     <i class="fa-solid fa-building-columns"></i>
@@ -433,7 +469,7 @@ HTML_TEMPLATE = """
                         <span class="text-slate-400 block text-[10px] uppercase font-bold">Nombre del Titular</span>
                         <strong class="text-white text-sm">Richard Cagua Velásquez</strong>
                     </div>
-                    <button onclick="copiarDato('Richard Cagua Velásquez', this)" title="Copiar nombre" class="bg-slate-800 hover:bg-slate-700 text-amber-400 p-2.5 rounded-lg border border-slate-700 transition">
+                    <button onclick="copiarDato('Richard Cagua Velásquez', this)" title="Copiar nombre" class="bg-slate-800 hover:bg-slate-700 text-amber-400 p-2.5 rounded-lg border border-slate-700 transition flex items-center">
                         <i class="fa-regular fa-copy"></i>
                     </button>
                 </div>
@@ -443,7 +479,7 @@ HTML_TEMPLATE = """
                         <span class="text-slate-400 block text-[10px] uppercase font-bold">Cédula de Identidad (CI)</span>
                         <strong class="text-white text-sm">0926903469</strong>
                     </div>
-                    <button onclick="copiarDato('0926903469', this)" title="Copiar CI" class="bg-slate-800 hover:bg-slate-700 text-amber-400 p-2.5 rounded-lg border border-slate-700 transition">
+                    <button onclick="copiarDato('0926903469', this)" title="Copiar CI" class="bg-slate-800 hover:bg-slate-700 text-amber-400 p-2.5 rounded-lg border border-slate-700 transition flex items-center">
                         <i class="fa-regular fa-copy"></i>
                     </button>
                 </div>
@@ -453,7 +489,7 @@ HTML_TEMPLATE = """
                         <span class="text-slate-400 block text-[10px] uppercase font-bold">Tipo de Cuenta</span>
                         <strong class="text-white text-sm">Cuenta de ahorros</strong>
                     </div>
-                    <button onclick="copiarDato('Cuenta de ahorros', this)" title="Copiar tipo" class="bg-slate-800 hover:bg-slate-700 text-amber-400 p-2.5 rounded-lg border border-slate-700 transition">
+                    <button onclick="copiarDato('Cuenta de ahorros', this)" title="Copiar tipo" class="bg-slate-800 hover:bg-slate-700 text-amber-400 p-2.5 rounded-lg border border-slate-700 transition flex items-center">
                         <i class="fa-regular fa-copy"></i>
                     </button>
                 </div>
@@ -463,7 +499,7 @@ HTML_TEMPLATE = """
                         <span class="text-slate-400 block text-[10px] uppercase font-bold">Banco</span>
                         <strong class="text-white text-sm">Banco Pacífico</strong>
                     </div>
-                    <button onclick="copiarDato('Banco Pacífico', this)" title="Copiar Banco" class="bg-slate-800 hover:bg-slate-700 text-amber-400 p-2.5 rounded-lg border border-slate-700 transition">
+                    <button onclick="copiarDato('Banco Pacífico', this)" title="Copiar Banco" class="bg-slate-800 hover:bg-slate-700 text-amber-400 p-2.5 rounded-lg border border-slate-700 transition flex items-center">
                         <i class="fa-regular fa-copy"></i>
                     </button>
                 </div>
@@ -473,7 +509,7 @@ HTML_TEMPLATE = """
                         <span class="text-slate-400 block text-[10px] uppercase font-bold">Número de Cuenta</span>
                         <strong class="text-white text-sm">1058068977</strong>
                     </div>
-                    <button onclick="copiarDato('1058068977', this)" title="Copiar número de cuenta" class="bg-slate-800 hover:bg-slate-700 text-amber-400 p-2.5 rounded-lg border border-slate-700 transition">
+                    <button onclick="copiarDato('1058068977', this)" title="Copiar número de cuenta" class="bg-slate-800 hover:bg-slate-700 text-amber-400 p-2.5 rounded-lg border border-slate-700 transition flex items-center">
                         <i class="fa-regular fa-copy"></i>
                     </button>
                 </div>

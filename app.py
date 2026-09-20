@@ -319,6 +319,9 @@ HTML_TEMPLATE = """
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MetroPuja.ec | Ránking de Posicionamiento Comercial en Guayas</title>
 
+    <!-- ETIQUETA CANÓNICA EXPLÍCITA PARA GOOGLE -->
+    <link rel="canonical" href="https://metropujasec.onrender.com/" />
+
     <!-- METADATOS SEO INVISIBLES PARA GOOGLE -->
     <meta name="description" content="MetroPuja.ec es la subasta interactiva de visibilidad comercial para marcas y empresas en Guayaquil, Samborondón, Daule y la provincia del Guayas.">
     <meta name="keywords" content="MetroPuja, MetroPuja.ec, posicionamiento comercial Guayaquil, publicidad digital Guayas, marcas Samborondón, empresas Daule, subasta web Ecuador, directorio de empresas Guayaquil, SEO Ecuador">
@@ -327,7 +330,7 @@ HTML_TEMPLATE = """
     <meta name="google-site-verification" content="bWLB9ITsPbSVEPAe7OAWm9IhH6POgtmoiiM5jzCXYVA" />
 
     <!-- NOMBRE OFICIAL DE MARCA PARA GOOGLE (REEMPLAZA A RENDER) -->
-    <meta property="og:site_name" content="MetroPuja.ec">
+    <meta property="og:site_name" content="MetroPuja">
     <meta property="og:title" content="MetroPuja.ec | Ránking de Posicionamiento Comercial en Guayas">
     <meta property="og:description" content="MetroPuja.ec es la subasta interactiva de visibilidad comercial para marcas y empresas en Guayaquil, Samborondón, Daule y la provincia del Guayas.">
     <meta property="og:image" content="https://metropujasec.onrender.com/static/uploads/metro_logo.jpeg">
@@ -337,14 +340,15 @@ HTML_TEMPLATE = """
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
-      "name": "MetroPuja.ec",
-      "alternateName": ["MetroPuja", "MetroPuja Ecuador"],
+      "name": "MetroPuja",
+      "alternateName": ["MetroPuja.ec", "MetroPuja Ecuador"],
       "url": "https://metropujasec.onrender.com/"
     }
     </script>
 
     <!-- LOGO Y FAVICON PARA EL BUSCADOR GOOGLE Y PESTAÑAS -->
-    <link rel="icon" type="image/jpeg" href="/static/uploads/metro_logo.jpeg">
+    <link rel="icon" type="image/jpeg" sizes="48x48" href="/static/uploads/metro_logo.jpeg">
+    <link rel="icon" type="image/jpeg" sizes="192x192" href="/static/uploads/metro_logo.jpeg">
     <link rel="shortcut icon" type="image/jpeg" href="/static/uploads/metro_logo.jpeg">
     <link rel="apple-touch-icon" href="/static/uploads/metro_logo.jpeg">
 
@@ -861,7 +865,7 @@ PRIVACIDAD_TEMPLATE = """
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Política de Privacidad | MetroPuja.ec</title>
-    <link rel="icon" type="image/jpeg" href="/static/uploads/metro_logo.jpeg">
+    <link rel="icon" type="image/jpeg" sizes="48x48" href="/static/uploads/metro_logo.jpeg">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
@@ -920,7 +924,7 @@ TERMINOS_TEMPLATE = """
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Términos de Servicio | MetroPuja.ec</title>
-    <link rel="icon" type="image/jpeg" href="/static/uploads/metro_logo.jpeg">
+    <link rel="icon" type="image/jpeg" sizes="48x48" href="/static/uploads/metro_logo.jpeg">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
@@ -979,7 +983,7 @@ SOBRE_NOSOTROS_TEMPLATE = """
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sobre Nosotros | MetroPuja.ec</title>
-    <link rel="icon" type="image/jpeg" href="/static/uploads/metro_logo.jpeg">
+    <link rel="icon" type="image/jpeg" sizes="48x48" href="/static/uploads/metro_logo.jpeg">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
@@ -1055,7 +1059,7 @@ ADMIN_PANEL_TEMPLATE = """
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Administración Protegido | MetroPuja.ec</title>
-    <link rel="icon" type="image/jpeg" href="/static/uploads/metro_logo.jpeg">
+    <link rel="icon" type="image/jpeg" sizes="48x48" href="/static/uploads/metro_logo.jpeg">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
